@@ -1,6 +1,6 @@
 import { alpha, Avatar, Box, Button, Drawer, Link, Stack, styled, Typography } from '@mui/material';
 import React from 'react';
-import NavSection from '../Nav-section';
+import NavSection from '../Nav-section/NavSection';
 import * as P from "./parts";
 
 const StyledAccount = styled('div')(({ theme }) => ({
