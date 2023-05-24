@@ -10,6 +10,11 @@ import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import ProductCard from '../../Pages/ProductCard/ProductCard';
 import { useNavigate } from "react-router-dom";
+import Rating from '@mui/material/Rating';
+import { pink } from '@mui/material/colors';
+import { useFavourites } from '../../Contexts/Favourites/FavouritesContext';
+import { useBasket } from '../../Contexts/Basket/BasketContext';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 // import Label from '../Label/Label';
 // utils
 // import { fCurrency } from '../../../utils/formatNumber';
@@ -68,13 +73,29 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product }) => {
   const [isClickedBag, setIsClickedBag] = useState<boolean>(false);
   const [isClickedProduct, setIsClickedProduct] = useState<boolean>(false);
   const navigate = useNavigate();
-  
-  const clickedFav = () => {
+  const {items, setItems} = useFavourites();
+  const {basketItems, setBasketItems} = useBasket();
+
+  const clickedFav = (event: React.SyntheticEvent) => {
       setIsClickedFav(!isClickedFav);
+
+      if (items && product) {
+        setItems([...items, product]);
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
   }
 
-  const clickedBag = () => {
+  const clickedBag = (event: React.SyntheticEvent) => {
     setIsClickedBag(!isClickedBag);
+
+    if (basketItems && setBasketItems) {
+      setBasketItems([...basketItems, product]);
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
 }
 
 const clickedProduct = () => {
@@ -83,10 +104,10 @@ const clickedProduct = () => {
 
   return (
     <Card
-      sx={{ height: 410}}
+      sx={{ height: 450}}
       onClick={clickedProduct}
     >
-      <Box sx={{ position: 'relative', width: 300, height: 250}}>
+      <Box sx={{ position: 'relative', width: 300, height: 230, }}>
         {/* {status && (
           <Label
             variant="filled"
@@ -106,10 +127,10 @@ const clickedProduct = () => {
         {isClickedFav 
           ?
           <FavoriteOutlinedIcon 
-            sx={{ position: 'absolute', right: 5, p: 1, }}onClick={clickedFav}/> 
+            sx={{ position: 'absolute', right: 5, p: 1, zIndex: 1, color: pink[500] }}onClick={clickedFav}/> 
           :
           <FavoriteBorderOutlinedIcon
-            sx={{ position: 'absolute', right: 5, p: 1, }} onClick={clickedFav}
+            sx={{ position: 'absolute', right: 5, p: 1, zIndex: 1, }} onClick={clickedFav}
           /> }
 
           {isClickedBag
@@ -152,9 +173,22 @@ const clickedProduct = () => {
             {price}
           </Typography>
         </Stack>
+        <Box
+        sx={{
+          '& > legend': { mt: 0.5, fontSize: '1rem' },
+          mt: 0.5
+        }}
+      >
+        {/* <Typography component="legend">Read only</Typography> */}
+        <Rating name="size-small" defaultValue={2} size="small" value={rating.rate} readOnly />
+        </Box>
       </Stack>
     </Card>
   );
 }
 
 export default SmallProductCard;
+
+{/* <HighlightOffIcon
+  sx={{ position: 'absolute', right: '381px', top: '65px', p: 1, zIndex: 1, }}>
+</HighlightOffIcon> */}

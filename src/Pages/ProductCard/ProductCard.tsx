@@ -10,55 +10,77 @@ import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Add from '@mui/icons-material/Add';
-
+import * as P from './parts';
+import Rating from '@mui/material/Rating';
 
 const ProductCard: React.FC = () => {
     const [product, setProduct] = useState<ISampleProduct | null>(null);
     const { id } = useParams();
+    const [rating, setRating] = React.useState<number | null>(2);
+    
 
     useEffect(() => {
         const getProduct = async () => {
             const { data } = await axios.get<ISampleProduct>(`https://fakestoreapi.com/products/${id}`);
             setProduct(data);
+            setRating(data.rating.rate);
         };
       
         getProduct();
     }, [id]);
-    
-    // const { category, description, image, price, rating, title } = product;
 
+    // const { category, description, image, price, rating, title } = product;
+    console.log(`rate:${product?.rating.rate}`)
     return (
     
-    <Card variant="outlined" sx={{ width: 620, height: 720, m: 4, p: 4, borderRadius: '32px', boxShadow: 3 }}>
-      <Typography level="h1">{product?.title}</Typography>
-      <Typography level="h2" fontSize="xl" sx={{ mb: 0.5 }}>
+    <Card variant="outlined" sx={{ width: 620, maxHeight: 720, m: 4, p: 4, borderRadius: '32px', boxShadow: 3, display: 'flex', flexDirection: 'column', }}>
+      <Typography level="h1" fontSize="2.5rem">{product?.title}</Typography>
+      <Typography level="h2" fontSize="1.8rem" sx={{ mb: 0.5 }}>
       {product?.category}
       </Typography>
-      <Typography level="body2">{product?.description}</Typography>
+      <Typography level="body2" fontSize="1rem">{product?.description}</Typography>
       <IconButton
         aria-label="bookmark Bahamas Islands"
         variant="plain"
         color="neutral"
-        size="sm"
-        sx={{ position: 'absolute', top: '0.5rem', right: '0.5rem' }}
+        size="lg"
+        sx={{ position: 'absolute', top: '3rem', right: '38.5rem', }}
       >
-        <BookmarkAdd />
+        <BookmarkAdd 
+         sx={{ fontSize: 30 }}
+        />
       </IconButton>
-      <AspectRatio minHeight="120px" maxHeight="400px" sx={{ my: 2, width: 1, height: 1 }}>
-        <img
+      <AspectRatio 
+      minHeight="120px" 
+      maxHeight="400px" 
+      sx={{ my: 2, width: 500, alignSelf: 'center' }}>
+        <P.ProductPhoto
           src={product?.image}
           loading="lazy"
           alt=""
-          width= "220px"
-          height= "320px"
-          object-fit= "contain"
-        //   sx={{ width: 220, height: 320 }}
         />
       </AspectRatio>
+      <Box
+      sx={{
+        '& > legend': { mt: 2 },
+      }}
+      >
+      {/* <Typography component="legend">Controlled</Typography> */}
+      <Rating
+        name="simple-controlled"
+        size="medium"
+        // defaultValue={product?.rating.rate}
+       value={rating}
+        // defaultValue={2.5}
+        onChange={(event, newValue) => {
+          setRating(newValue);
+        }}
+      />
+      </Box>
       <Box sx={{ display: 'flex' }}>
         <div>
-          <Typography level="body3">Total price:</Typography>
-          <Typography fontSize="lg" fontWeight="lg">
+          <Typography level="body3" fontSize="1rem">Total price:</Typography>
+          <Typography fontSize="1.8rem" fontWeight="600">
             {product?.price}
           </Typography>
         </div>
@@ -66,9 +88,8 @@ const ProductCard: React.FC = () => {
           startDecorator={<Add />}
           variant="solid"
           size="sm"
-          color="primary"
           aria-label="Explore Bahamas Islands"
-          sx={{ ml: 'auto', fontWeight: 600 }}
+          sx={{ ml: 'auto', fontWeight: 600, backgroundColor: '#4dd0e1' }}
         >
           ADD TO CART
         </Button>
