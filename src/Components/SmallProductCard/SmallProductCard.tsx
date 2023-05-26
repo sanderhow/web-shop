@@ -52,6 +52,7 @@ export interface IProduct {
 interface ISmallProductCardProps {
   product: ISampleProduct;
   isBasket?: boolean;
+  isFavourite?: boolean;
 }
 
 export interface ISampleProduct {
@@ -68,7 +69,7 @@ export interface ISampleProduct {
 }
 
 
-const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket }) => {
+const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket, isFavourite }) => {
   const { category, description, id, image, price, rating, title } = product;
   const [isClickedFav, setIsClickedFav] = useState<boolean>(false);
   const [isClickedBag, setIsClickedBag] = useState<boolean>(false);
@@ -77,18 +78,40 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket 
   const {items, setItems} = useFavourites();
   const {basketItems, setBasketItems} = useBasket();
   const [isBagRemoved, setIsBagRemoved] = useState<boolean>(false);
+  const [isFavouriteRemoved, setIsFavouriteRemoved] = useState<boolean>(false);
 
+//Favourites management//
+//---------------------------------------------------------------------------------------------------------------------------------------------------//
   const clickedFav = (event: React.SyntheticEvent) => {
       setIsClickedFav(!isClickedFav);
 
       if (items && product) {
+       
         setItems([...items, product]);
       }
-
+      
       event.preventDefault();
       event.stopPropagation();
   }
 
+  const favouriteRemoved = (event: React.SyntheticEvent) => {
+    setIsFavouriteRemoved(true);
+    setIsClickedFav(!isClickedFav);
+
+  const newFavouritesItems = items?.filter(item =>
+    item.id !== id
+    );
+    setItems(newFavouritesItems);
+
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  let favouritesList = items?.map((x) => x.id);
+  const isFavouriteOnList = favouritesList?.some(x => x === id);
+
+  //Basket management//
+  //---------------------------------------------------------------------------------------------------------------------------------------------------//
   const clickedBag = (event: React.SyntheticEvent) => {
     setIsClickedBag(!isClickedBag);
 
@@ -103,52 +126,42 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket 
 
   const bagRemoved = (event: React.SyntheticEvent) => {
     setIsBagRemoved(true);
-    
-       const newBasketItems = basketItems?.filter(item =>
-          item.id !== id
+    setIsClickedBag(!isClickedBag);
+
+      const newBasketItems = basketItems?.filter(item =>
+        item.id !== id
         );
-        setBasketItems(newBasketItems);
+      setBasketItems(newBasketItems);
       
     event.preventDefault();
     event.stopPropagation();
   }
 
+  let basketList = items?.map((x) => x.id);
+  const isBasketOnList = basketList?.some(x => x === id);
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  
   const clickedProduct = () => {
     navigate(`/product/${id}`);
   }
-
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  
   return (
     <Card
       sx={{ height: 450}}
       onClick={clickedProduct}
     >
       <Box sx={{ position: 'relative', width: 300, height: 230, }}>
-        {/* {status && (
-          <Label
-            variant="filled"
-            color={(status === 'sale' && 'error') || 'info'}
-            sx={{
-              zIndex: 9,
-              top: 16,
-              right: 16,
-              position: 'absolute',
-              textTransform: 'uppercase',
-            }}
-         >
-            {status}
-          </Label>
-        )} */}
-        {/* <span>LABEL</span> */}
-        {isClickedFav 
-          ?
-          <FavoriteOutlinedIcon 
-            sx={{ position: 'absolute', right: 5, p: 1, zIndex: 1, color: pink[500] }}onClick={clickedFav}/> 
-          :
-          <FavoriteBorderOutlinedIcon
-            sx={{ position: 'absolute', right: 5, p: 1, zIndex: 1, }} onClick={clickedFav}
-          /> }
+        {(!isFavourite && !isFavouriteOnList) ?
+          (isClickedFav ?
+            <FavoriteOutlinedIcon sx={{ position: 'absolute', right: 5, p: 1, zIndex: 1, color: pink[500] }}onClick={clickedFav}/> 
+            :
+            <FavoriteBorderOutlinedIcon sx={{ position: 'absolute', right: 5, p: 1, zIndex: 1, }} onClick={clickedFav}/>
+          ) : 
+          <FavoriteOutlinedIcon sx={{ position: 'absolute', right: 5, p: 1, zIndex: 1, color: pink[500] }}onClick={favouriteRemoved}/>
+        }
 
-          {!isBasket ?
+          {(!isBasket && !isBasketOnList) ?
               (isClickedBag ?
                 <ShoppingBagIcon sx={{ position: 'absolute', right: 5, mt: 4, p: 1, }} onClick={clickedBag}/>
                 :

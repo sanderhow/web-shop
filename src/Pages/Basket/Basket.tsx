@@ -1,12 +1,13 @@
 import React from 'react';
 import SmallProductCard from '../../Components/SmallProductCard/SmallProductCard';
 import { useBasket } from '../../Contexts/Basket/BasketContext';
+import * as P from './parts';
 
 const Basket: React.FC = () => {
     const {basketItems} = useBasket();
 
     return (
-     <div>
+     <P.BasketWrapper>
          {basketItems && basketItems.map((x, id) => (
             <div>
                 <SmallProductCard 
@@ -16,7 +17,7 @@ const Basket: React.FC = () => {
                 />
             </div>
          ))}
-    </div>
+    </P.BasketWrapper>
     );
 }
   

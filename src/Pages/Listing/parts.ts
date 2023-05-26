@@ -5,7 +5,6 @@ export const ListingWrapper = styled.div`
     justify-content: center;
     flex-wrap: wrap;
     width: fit-content;
-    margin-top: 50px;
-    margin-left: 65px;
+    margin: 50px 25px 20px;
     gap: 20px;
 `;

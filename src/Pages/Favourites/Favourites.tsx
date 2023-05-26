@@ -1,18 +1,23 @@
 import React from 'react';
 import SmallProductCard from '../../Components/SmallProductCard/SmallProductCard';
 import { useFavourites } from '../../Contexts/Favourites/FavouritesContext';
+import * as P from './parts';
 
 const Favourites: React.FC = () => {
     const {items} = useFavourites();
 
     return (
-     <div>
+     <P.FavouritesWrapper>
          {items && items.map((x, id) => (
             <div>
-            <SmallProductCard key={id} product={x} />
+            <SmallProductCard 
+                key={id+x.title} 
+                product={x} 
+                isFavourite
+            />
             </div>
        ))}
-     </div>
+     </P.FavouritesWrapper>
     );
 }
   

@@ -13,15 +13,18 @@ import Footer from "./Components/Footer/Footer";
 import * as P from "./parts";
 import { FavouritesContextProvider } from "./Contexts/Favourites/FavouritesContext";
 import { BasketContextProvider } from "./Contexts/Basket/BasketContext";
+import Searchbar from "./Components/Header/Searchbar/Searchbar";
+import Header from "./Components/Header/Index";
+
 
 const App: React.FC = () => {
 
   return (
     <BasketContextProvider>
-      <FavouritesContextProvider>
-        <P.AppWrapper>
+      <FavouritesContextProvider>s
+        <P.AppWrapper1>
           <BrowserRouter>
-            <Navbar/>
+          <Navbar/>
               <Routes>
                     <Route path="/" element={<MainPage />} />
                     <Route path="/favourites" element={<Favourites />} />
@@ -31,10 +34,12 @@ const App: React.FC = () => {
                     <Route path="/checkout" element={<Checkout />} />
                   </Routes>
             </BrowserRouter>
+        </P.AppWrapper1>
+        <P.AppWrapper2>
+          <Header/>
             <Footer />
-            {/* © COPYRIGHT {new Date().getFullYear()}
-            </Footer> */}
-          </P.AppWrapper>
+            {/* {© COPYRIGHT {new Date().getFullYear()} */}
+        </P.AppWrapper2>
       </FavouritesContextProvider>
     </BasketContextProvider>
   );

@@ -12,13 +12,15 @@ import Button from '@mui/joy/Button';
 import Add from '@mui/icons-material/Add';
 import * as P from './parts';
 import Rating from '@mui/material/Rating';
+import { useBasket } from '../../Contexts/Basket/BasketContext';
 
 const ProductCard: React.FC = () => {
     const [product, setProduct] = useState<ISampleProduct | null>(null);
     const { id } = useParams();
     const [rating, setRating] = React.useState<number | null>(2);
+    const [isAddToCart, setIsAddToCart] = useState<boolean>(false);
+    const {basketItems, setBasketItems} = useBasket();
     
-
     useEffect(() => {
         const getProduct = async () => {
             const { data } = await axios.get<ISampleProduct>(`https://fakestoreapi.com/products/${id}`);
@@ -31,8 +33,22 @@ const ProductCard: React.FC = () => {
 
     // const { category, description, image, price, rating, title } = product;
     console.log(`rate:${product?.rating.rate}`)
-    return (
-    
+
+    const addToCart = (event: React.SyntheticEvent) => {
+      setIsAddToCart(!isAddToCart);
+  
+      if (basketItems && product) {
+        setBasketItems([...basketItems, product]);
+        console.log(basketItems);
+      }
+  
+      event.preventDefault();
+      event.stopPropagation();
+  }
+
+
+
+  return (
     <Card variant="outlined" sx={{ width: 620, maxHeight: 720, m: 4, p: 4, borderRadius: '32px', boxShadow: 3, display: 'flex', flexDirection: 'column', }}>
       <Typography level="h1" fontSize="2.5rem">{product?.title}</Typography>
       <Typography level="h2" fontSize="1.8rem" sx={{ mb: 0.5 }}>
@@ -44,7 +60,7 @@ const ProductCard: React.FC = () => {
         variant="plain"
         color="neutral"
         size="lg"
-        sx={{ position: 'absolute', top: '3rem', right: '38.5rem', }}
+        sx={{ position: 'absolute', top: '3.5rem', right: '28.5rem', }}
       >
         <BookmarkAdd 
          sx={{ fontSize: 30 }}
@@ -90,6 +106,7 @@ const ProductCard: React.FC = () => {
           size="sm"
           aria-label="Explore Bahamas Islands"
           sx={{ ml: 'auto', fontWeight: 600, backgroundColor: '#4dd0e1' }}
+          onClick={addToCart}
         >
           ADD TO CART
         </Button>

@@ -19,7 +19,10 @@ const Listing: React.FC = () => {
     <P.ListingWrapper>
        {allProducts.map((x, id) => (
             <div>
-            <SmallProductCard key={id} product={x} />
+            <SmallProductCard 
+                key={id+x.title} 
+                product={x} 
+            />
             </div>
        ))}
     </P.ListingWrapper>

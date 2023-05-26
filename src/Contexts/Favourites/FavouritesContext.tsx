@@ -2,15 +2,15 @@ import { createContext, PropsWithChildren, useContext, useMemo, useState } from 
 import { ISampleProduct } from "../../Components/SmallProductCard/SmallProductCard";
 
 interface IFavouritesContext {
-    items: ISampleProduct[] | null;
-    setItems(items: ISampleProduct[] | null): void;
+    items: ISampleProduct[] | undefined;
+    setItems(items: ISampleProduct[] | undefined): void;
 }
 
 const FavouritesContext = createContext<IFavouritesContext | undefined>(undefined)
 FavouritesContext.displayName = "FavouritesContext";
 
 export const FavouritesContextProvider = ({ children } : PropsWithChildren) => {
-    const [items, setItems] = useState<ISampleProduct[] | null>([]);
+    const [items, setItems] = useState<ISampleProduct[] | undefined>([]);
     
     const contextData: IFavouritesContext = useMemo(
         () => ({
