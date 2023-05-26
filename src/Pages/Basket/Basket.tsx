@@ -1,8 +1,6 @@
 import React from 'react';
 import SmallProductCard from '../../Components/SmallProductCard/SmallProductCard';
 import { useBasket } from '../../Contexts/Basket/BasketContext';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-
 
 const Basket: React.FC = () => {
     const {basketItems} = useBasket();
@@ -11,7 +9,11 @@ const Basket: React.FC = () => {
      <div>
          {basketItems && basketItems.map((x, id) => (
             <div>
-                Basket
+                <SmallProductCard 
+                    key={id} 
+                    product={x} 
+                    isBasket
+                />
             </div>
          ))}
     </div>

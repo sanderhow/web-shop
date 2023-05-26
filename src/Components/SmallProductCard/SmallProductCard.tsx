@@ -51,6 +51,7 @@ export interface IProduct {
 
 interface ISmallProductCardProps {
   product: ISampleProduct;
+  isBasket?: boolean;
 }
 
 export interface ISampleProduct {
@@ -67,7 +68,7 @@ export interface ISampleProduct {
 }
 
 
-const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product }) => {
+const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket }) => {
   const { category, description, id, image, price, rating, title } = product;
   const [isClickedFav, setIsClickedFav] = useState<boolean>(false);
   const [isClickedBag, setIsClickedBag] = useState<boolean>(false);
@@ -75,6 +76,7 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product }) => {
   const navigate = useNavigate();
   const {items, setItems} = useFavourites();
   const {basketItems, setBasketItems} = useBasket();
+  const [isBagRemoved, setIsBagRemoved] = useState<boolean>(false);
 
   const clickedFav = (event: React.SyntheticEvent) => {
       setIsClickedFav(!isClickedFav);
@@ -90,17 +92,30 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product }) => {
   const clickedBag = (event: React.SyntheticEvent) => {
     setIsClickedBag(!isClickedBag);
 
-    if (basketItems && setBasketItems) {
+    if (basketItems && product) {
       setBasketItems([...basketItems, product]);
+      console.log(basketItems);
     }
 
     event.preventDefault();
     event.stopPropagation();
 }
 
-const clickedProduct = () => {
-  navigate(`/product/${id}`);
-}
+  const bagRemoved = (event: React.SyntheticEvent) => {
+    setIsBagRemoved(true);
+    
+       const newBasketItems = basketItems?.filter(item =>
+          item.id !== id
+        );
+        setBasketItems(newBasketItems);
+      
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  const clickedProduct = () => {
+    navigate(`/product/${id}`);
+  }
 
   return (
     <Card
@@ -133,14 +148,15 @@ const clickedProduct = () => {
             sx={{ position: 'absolute', right: 5, p: 1, zIndex: 1, }} onClick={clickedFav}
           /> }
 
-          {isClickedBag
-          ?
-          <ShoppingBagIcon
-          sx={{ position: 'absolute', right: 5, mt: 4, p: 1, }} onClick={clickedBag}/>
-          :
-          <ShoppingBagOutlinedIcon
-          sx={{ position: 'absolute', right: 5, mt: 4, p: 1, }} onClick={clickedBag}/>
-        }
+          {!isBasket ?
+              (isClickedBag ?
+                <ShoppingBagIcon sx={{ position: 'absolute', right: 5, mt: 4, p: 1, }} onClick={clickedBag}/>
+                :
+                <ShoppingBagOutlinedIcon sx={{ position: 'absolute', right: 5, mt: 4, p: 1, }} onClick={clickedBag}/>
+              ) :
+              <HighlightOffIcon sx={{ position: 'absolute', right: 5, mt: 4, p: 1, zIndex: 1 }} onClick={bagRemoved}/>
+          }
+
         <StyledProductImg alt={title} src={image} />
       </Box>
 
@@ -189,6 +205,3 @@ const clickedProduct = () => {
 
 export default SmallProductCard;
 
-{/* <HighlightOffIcon
-  sx={{ position: 'absolute', right: '381px', top: '65px', p: 1, zIndex: 1, }}>
-</HighlightOffIcon> */}

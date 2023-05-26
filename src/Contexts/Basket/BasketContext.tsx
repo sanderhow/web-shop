@@ -2,15 +2,15 @@ import { createContext, PropsWithChildren, useContext, useMemo, useState } from 
 import { ISampleProduct } from "../../Components/SmallProductCard/SmallProductCard";
 
 interface IBasketContext {
-    basketItems: ISampleProduct[] | null;
-    setBasketItems(items: ISampleProduct[] | null): void;
+    basketItems: ISampleProduct[] | undefined;
+    setBasketItems(items: ISampleProduct[] | undefined): void;
 }
 
 const BasketContext = createContext<IBasketContext | undefined>(undefined)
 BasketContext.displayName = "BasketContext";
 
 export const BasketContextProvider = ({ children } : PropsWithChildren) => {
-    const [basketItems, setBasketItems] = useState<ISampleProduct[] | null>([]);
+    const [basketItems, setBasketItems] = useState<ISampleProduct[] | undefined>([]);
     
     const contextData: IBasketContext = useMemo(
         () => ({
