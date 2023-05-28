@@ -95,7 +95,6 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
   }
 
   const favouriteRemoved = (event: React.SyntheticEvent) => {
-    setIsFavouriteRemoved(true);
     setIsClickedFav(!isClickedFav);
 
   const newFavouritesItems = items?.filter(item =>
@@ -137,7 +136,7 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
     event.stopPropagation();
   }
 
-  let basketList = items?.map((x) => x.id);
+  let basketList = basketItems?.map((x) => x.id);
   const isBasketOnList = basketList?.some(x => x === id);
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   
@@ -159,7 +158,7 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
             <FavoriteBorderOutlinedIcon sx={{ position: 'absolute', right: 5, p: 1, zIndex: 1, }} onClick={clickedFav}/>
           ) : 
           <FavoriteOutlinedIcon sx={{ position: 'absolute', right: 5, p: 1, zIndex: 1, color: pink[500] }}onClick={favouriteRemoved}/>
-        }
+          }
 
           {(!isBasket && !isBasketOnList) ?
               (isClickedBag ?

@@ -21,23 +21,23 @@ const App: React.FC = () => {
 
   return (
     <BasketContextProvider>
-      <FavouritesContextProvider>s
-        <P.AppWrapper1>
+      <FavouritesContextProvider>
           <BrowserRouter>
           <Navbar/>
-              <Routes>
-                    <Route path="/" element={<MainPage />} />
-                    <Route path="/favourites" element={<Favourites />} />
-                    <Route path="/basket" element={<Basket />} />
-                    <Route path="/product/:id" element={<ProductCard />} />
-                    <Route path="/listing" element={<Listing />} />
-                    <Route path="/checkout" element={<Checkout />} />
-                  </Routes>
-            </BrowserRouter>
-        </P.AppWrapper1>
-        <P.AppWrapper2>
-          <Header/>
+          <P.AppWrapper1>
+            <Header/>
+                <Routes>
+                      <Route path="/" element={<MainPage />} />
+                      <Route path="/favourites" element={<Favourites />} />
+                      <Route path="/basket" element={<Basket />} />
+                      <Route path="/product/:id" element={<ProductCard />} />
+                      <Route path="/listing" element={<Listing />} />
+                      <Route path="/checkout" element={<Checkout />} />
+                    </Routes>
             <Footer />
+          </P.AppWrapper1>
+          </BrowserRouter>
+        <P.AppWrapper2>
             {/* {© COPYRIGHT {new Date().getFullYear()} */}
         </P.AppWrapper2>
       </FavouritesContextProvider>
