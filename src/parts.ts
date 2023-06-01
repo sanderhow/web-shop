@@ -5,6 +5,8 @@ export const AppWrapper1 = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
+    margin: 10px 100px;
+    z-index: 1;
 `;
 
 export const AppWrapper2 = styled.div`
