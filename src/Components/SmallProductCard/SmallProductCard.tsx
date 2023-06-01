@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 // @mui
 import { Box, Card, Link, Typography, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { relative } from 'node:path/win32';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
@@ -14,12 +13,7 @@ import Rating from '@mui/material/Rating';
 import { pink } from '@mui/material/colors';
 import { useFavourites } from '../../Contexts/Favourites/FavouritesContext';
 import { useBasket } from '../../Contexts/Basket/BasketContext';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-// import Label from '../Label/Label';
-// utils
-// import { fCurrency } from '../../../utils/formatNumber';
-// components
-// import { ColorPreview } from '../../../components/color-utils';
+
 
 // ----------------------------------------------------------------------
 
@@ -36,9 +30,6 @@ const StyledProductImg = styled('img')({
 
 // ----------------------------------------------------------------------
 
-// ShopProductCard.propTypes = {
-//   product: PropTypes.object,
-// };
 export interface IProduct {
   id: number;
   name: string;
@@ -77,7 +68,6 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
   const navigate = useNavigate();
   const {items, setItems} = useFavourites();
   const {basketItems, setBasketItems} = useBasket();
-  const [isBagRemoved, setIsBagRemoved] = useState<boolean>(false);
   const [isFavouriteRemoved, setIsFavouriteRemoved] = useState<boolean>(false);
 
 //Favourites management//
@@ -112,29 +102,16 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
   //Basket management//
   //---------------------------------------------------------------------------------------------------------------------------------------------------//
   const clickedBag = (event: React.SyntheticEvent) => {
-    setIsClickedBag(!isClickedBag);
+    console.log('clickedBag');
+    setIsClickedBag(true);
 
     if (basketItems && product) {
       setBasketItems([...basketItems, product]);
-      console.log(basketItems);
     }
 
     event.preventDefault();
     event.stopPropagation();
 }
-
-  const bagRemoved = (event: React.SyntheticEvent) => {
-    setIsBagRemoved(true);
-    setIsClickedBag(!isClickedBag);
-
-      const newBasketItems = basketItems?.filter(item =>
-        item.id !== id
-        );
-      setBasketItems(newBasketItems);
-      
-    event.preventDefault();
-    event.stopPropagation();
-  }
 
   let basketList = basketItems?.map((x) => x.id);
   const isBasketOnList = basketList?.some(x => x === id);
@@ -161,14 +138,13 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
           }
 
           {(!isBasket && !isBasketOnList) ?
-              (isClickedBag ?
-                <ShoppingBagIcon sx={{ position: 'absolute', right: 5, mt: 4, p: 1, }} onClick={clickedBag}/>
+            (isClickedBag ?
+                <ShoppingBagIcon sx={{ position: 'absolute', right: 5, mt: 4, p: 1, zIndex: 1, }} onClick={clickedBag}/>
                 :
-                <ShoppingBagOutlinedIcon sx={{ position: 'absolute', right: 5, mt: 4, p: 1, }} onClick={clickedBag}/>
-              ) :
-              <HighlightOffIcon sx={{ position: 'absolute', right: 5, mt: 4, p: 1, zIndex: 1 }} onClick={bagRemoved}/>
-          }
-
+                <ShoppingBagOutlinedIcon sx={{ position: 'absolute', right: 5, mt: 4, p: 1, zIndex: 1,}} onClick={clickedBag}/>
+            ) :
+            <ShoppingBagIcon sx={{ position: 'absolute', right: 5, mt: 4, p: 1, zIndex: 1, }} onClick={clickedBag}/>
+            }
         <StyledProductImg alt={title} src={image} />
       </Box>
 
