@@ -4,7 +4,11 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 
-export default function Dropdown1() {
+interface Dropdown1Props {
+  quantity: number;
+}
+
+const Dropdown1: React.FC<Dropdown1Props> = ({ quantity }) => {
   return (
     <Box sx={{ minWidth: 120, fontFamily: `"Roboto","Helvetica","Arial",sans-serif`, fontSize: 0.875 }}>
       <FormControl required fullWidth>
@@ -12,7 +16,7 @@ export default function Dropdown1() {
           Quantity
         </InputLabel>
         <NativeSelect
-          defaultValue={30}
+          defaultValue={quantity}
           inputProps={{
             name: 'quantity',
             id: 'uncontrolled-native',
@@ -21,8 +25,16 @@ export default function Dropdown1() {
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
+          <option value={7}>7</option>
+          <option value={8}>8</option>
+          <option value={9}>9</option>
         </NativeSelect>
       </FormControl>
     </Box>
   );
 }
+
+export default Dropdown1;

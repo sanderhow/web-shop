@@ -1,25 +1,36 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import React from 'react';
-import SmallProductCard from '../../Components/SmallProductCard/SmallProductCard';
+import React, { useState } from 'react';
+import SmallProductCard, { ISampleProduct } from '../../Components/SmallProductCard/SmallProductCard';
 import { useBasket } from '../../Contexts/Basket/BasketContext';
 import * as P from './parts';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Dropdown1 from '../../Components/Dropdown/Dropdown1';
 // import Dropdown1 from '../../Components/Dropdown/Dropdown';
 
-const Basket: React.FC = () => {
-    const {basketItems} = useBasket();
 
-    function basketData(
-        image: string,
-        name: string,
-        price: number,
-        quantity: number,
-        basket: string,
-      ) {
-        return { image, name, price, quantity, basket };
-      }
+export type IBasketTable = ISampleProduct & { quantity: number };
+
+
+const Basket = () => {
+    
+  const {basketItems, setBasketItems} = useBasket();
+  const [isDuplicate, setIsDuplicate] = useState('');
       
+    let tableItems : IBasketTable[] = [];
+    
+    basketItems?.map((item) => {
+      if (tableItems.some((x) => x.id === item.id)) {
+        const elementDuplicated = tableItems.find(x => x.id === item.id);
+        if (elementDuplicated) {
+          const index = tableItems.indexOf(elementDuplicated);
+          tableItems[index].quantity++;
+        }
+      } else {
+        const newTableItem = { ...item, quantity: 1 };
+        tableItems.push(newTableItem);
+      }
+    })
+
     return (
   <TableContainer component={Paper}>
   <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -33,7 +44,7 @@ const Basket: React.FC = () => {
     </TableRow>
   </TableHead>
   <TableBody>
-    {basketItems && basketItems.map((x, id) => (
+    {tableItems && tableItems.map((x, id) => (
       <TableRow
         key={id}
       >
@@ -43,7 +54,7 @@ const Basket: React.FC = () => {
         <TableCell align="right">{x.title}</TableCell>
         <TableCell align="right">{x.price}</TableCell>
         <TableCell align="right">
-           <Dropdown1/>
+           <Dropdown1 quantity={x.quantity} />
         </TableCell>
         <TableCell align="right">
             <IconButton aria-label="delete">
