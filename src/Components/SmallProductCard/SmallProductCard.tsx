@@ -59,6 +59,20 @@ export interface ISampleProduct {
   title: string;
 }
 
+export interface IUserData {
+  address: string;
+  email: string;
+  id: number;
+  name: {firstname: string, lastname: string};
+  password: string;
+  phone: string;
+  username: string;
+}
+
+interface IUserProps {
+  user: IUserData;
+}
+
 
 const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket, isFavourite }) => {
   const { category, description, id, image, price, rating, title } = product;

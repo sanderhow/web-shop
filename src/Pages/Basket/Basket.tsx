@@ -14,9 +14,8 @@ export type IBasketTable = ISampleProduct & { quantity: number };
 const Basket = () => {
     
   const {basketItems, setBasketItems} = useBasket();
-  const [isDuplicate, setIsDuplicate] = useState('');
       
-    let tableItems : IBasketTable[] = [];
+  let tableItems : IBasketTable[] = [];
     
     basketItems?.map((item) => {
       if (tableItems.some((x) => x.id === item.id)) {

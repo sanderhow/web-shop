@@ -16,6 +16,7 @@ import { useBasket } from '../../Contexts/Basket/BasketContext';
 
 const ProductCard: React.FC = () => {
     const [product, setProduct] = useState<ISampleProduct | null>(null);
+    const [user, setUser] = useState<IUserData | null>(null);
     const { id } = useParams();
     const [rating, setRating] = React.useState<number | null>(2);
     const [isAddToCart, setIsAddToCart] = useState<boolean>(false);
@@ -30,6 +31,16 @@ const ProductCard: React.FC = () => {
       
         getProduct();
     }, [id]);
+
+    useEffect(() => {
+      const getUser = async () => {
+          const { user } = await axios.get<IUserData>(`https://fakestoreapi.com/users${id}`);
+          setUser(user);
+          setRating(data.rating.rate);
+      };
+    
+      getProduct();
+  }, [id]);
 
     // const { category, description, image, price, rating, title } = product;
     console.log(`rate:${product?.rating.rate}`)
