@@ -9,8 +9,10 @@ import { bgBlur } from '../../../utils/cssStyles';
 import Searchbar from '../Searchbar/Searchbar';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
-import BasketHeader from '../FavouritesHeader/BasketHeader';
+import BasketHeader from '../BasketHeader/BasketHeader';
 import Avatar from '@mui/material/Avatar';
+import LoginModal from '../../Login/Modal/LoginModal';
+
 //
 // import Searchbar from './Searchbar';
 // import AccountPopover from './AccountPopover';
@@ -79,12 +81,14 @@ export default function Header()
             }}
           />
           <BasketHeader/>
-          <Avatar src="/broken-image.jpg" 
+          {/* <Avatar 
+            src="/broken-image.jpg" 
             sx={{
               width: 24, 
               height: 24
-          }}
-          />
+          }}/> */}
+
+         <LoginModal/>
          
         </Stack> 
       </StyledToolbar>
