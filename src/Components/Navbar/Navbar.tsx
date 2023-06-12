@@ -1,5 +1,6 @@
 import { alpha, Avatar, Box, Button, Drawer, Link, Stack, styled, Typography } from '@mui/material';
 import React from 'react';
+import { useUser } from '../../Contexts/Auth/UserData';
 import NavSection from '../Nav-section/NavSection';
 import * as P from "./parts";
 
@@ -44,8 +45,38 @@ const navConfig = [
     },
   ];
 
+  function stringToColor(string: string) {
+    let hash = 0;
+    let i;
+  
+    /* eslint-disable no-bitwise */
+    for (i = 0; i < string.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+  
+    let color = '#';
+  
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += `00${value.toString(16)}`.slice(-2);
+    }
+    /* eslint-enable no-bitwise */
+  
+    return color;
+  }
+
+  function stringAvatar(name: string) {
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    };
+  }
+
 const Navbar: React.FC = () => {
-    const renderContent = (
+  const { userItems } = useUser();
+  const renderContent = (
         <div
         //   sx={{
         //     height: 1,
@@ -59,19 +90,23 @@ const Navbar: React.FC = () => {
           <Box sx={{ mb: 5, mx: 2.5 }}>
             <Link underline="none">
               <StyledAccount>
-                <Avatar 
-                // src={account.photoURL}
-                 alt="photoURL" />
-    
+                {userItems ?
+                  <Avatar {...stringAvatar(`John Doe`)} />
+                :
+                <Avatar sx={{
+                  alt: "photoURL",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}/>
+                }
+                
                 <Box sx={{ ml: 2 }}>
-                  <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                    {/* {account.displayName} */}
-                    hjjkkkk
+                  <Typography variant="subtitle2" sx={{ color: 'text.#3f51b5', fontWeight: 'bold' }}>
+                    {userItems?.name.firstname.toUpperCase()}
                   </Typography>
     
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    {/* {account.role} */}
-                    hjjkjj
+                  <Typography variant="body2" sx={{ color: 'text.#3f51b5', fontWeight: 'bold' }}>
+                    {userItems?.name.lastname.toUpperCase()}
                   </Typography>
                 </Box>
               </StyledAccount>

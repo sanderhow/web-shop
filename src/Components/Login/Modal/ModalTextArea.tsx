@@ -11,26 +11,36 @@ import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import { IUserData } from "../../SmallProductCard/SmallProductCard";
 import axios from "axios";
+import { useUser } from "../../../Contexts/Auth/UserData";
+import React from "react";
 
-const ModalTextArea = () => {
+interface IModalTextAreaProps {
+  handleClose: () => void,
+}
+
+const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
+  const { setUserItems, setIsAuth } = useUser();
+  
   const getUser = async () => {
       const { data } = await axios.get<IUserData>(`https://fakestoreapi.com/users/1`);
       setUserItems(data);
   };
-
+  
   const handleSubmit = (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const username = data.get("username");
     const password = data.get("password");
-
+    
     if (username === "mor_2314" && password === "83r5^_") {
       getUser();
+      setIsAuth(true);
+      handleClose();
     }
   };
    
   return (
-    <Container component="main" maxWidth="lg">
+    <Container component="main" maxWidth="lg" >
       <Box
         sx={{
           marginTop: 8,
@@ -79,8 +89,8 @@ const ModalTextArea = () => {
                 component="form"
                 noValidate
                 onSubmit={handleSubmit}
-                sx={{ mt: 1 }}
-              >
+                sx={{ mt: 1 }}>
+              
                 <TextField
                   margin="normal"
                   required
@@ -135,7 +145,3 @@ const ModalTextArea = () => {
 }
 
 export default ModalTextArea;
-
-function setUserItems(data: IUserData) {
-  throw new Error("Function not implemented.");
-}
