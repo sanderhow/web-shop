@@ -74,8 +74,15 @@ const navConfig = [
     };
   }
 
-const Navbar: React.FC = () => {
+  interface INavbarProps {
+    isMenuClicked: boolean;
+    setIsMenuClicked: (a: boolean) => void;
+  }
+
+
+const Navbar: React.FC<INavbarProps> = ({ isMenuClicked, setIsMenuClicked }) => {
   const { userItems } = useUser();
+  const isMobile = window.innerWidth < 1000;
   const renderContent = (
         <div
         //   sx={{
@@ -128,21 +135,38 @@ const Navbar: React.FC = () => {
           </Box>
         </div>
       );
+      console.log(isMenuClicked);
     return (
       <P.Wrapper>
+        {isMobile ? 
+          <Drawer
+          open={isMenuClicked}
+          variant="temporary"
+          PaperProps={{
+            sx: {
+              width: NAV_WIDTH,
+              bgcolor: 'background.default',
+              borderRightStyle: 'dashed',
+            },
+          }}
+          onClose={() => setIsMenuClicked(false)}
+          >
+          {renderContent}
+        </Drawer> :
         <Drawer
-        open
-        variant="permanent"
-        PaperProps={{
-          sx: {
-            width: NAV_WIDTH,
-            bgcolor: 'background.default',
-            borderRightStyle: 'dashed',
-          },
-        }}
-      >
-        {renderContent}
-      </Drawer>
+          open
+          variant="permanent"
+          PaperProps={{
+            sx: {
+              width: NAV_WIDTH,
+              bgcolor: 'background.default',
+              borderRightStyle: 'dashed',
+            },
+          }}
+          >
+          {renderContent}
+        </Drawer>
+      }
       </P.Wrapper>
     );
 }

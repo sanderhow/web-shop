@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Avatar } from '@mui/material';
 import ModalTextArea from './ModalTextArea';
 import { useUser } from '../../../Contexts/Auth/UserData';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -25,7 +26,16 @@ const LoginModal = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { isAuth } = useUser();
+  const navigate = useNavigate();
+  const { isAuth, setIsAuth, setUserItems } = useUser();
+  
+
+  const handleNavigate = () => {
+    navigate(`/`);
+    handleClose();
+    setIsAuth(false);
+    setUserItems(undefined);
+  }
 
   return (
     <div>
@@ -54,10 +64,9 @@ const LoginModal = () => {
         >
           <Fade in={open}>
             <Box sx={style}>
-              <Button onClick={handleOpen}>
-                Wyloguj
-              </Button>
-          
+                <Button onClick={handleNavigate}>
+                  Wyloguj 
+                </Button>
             </Box>
           </Fade>
         </Modal> 

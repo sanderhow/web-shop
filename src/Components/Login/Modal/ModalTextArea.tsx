@@ -32,7 +32,8 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
     const username = data.get("username");
     const password = data.get("password");
     
-    if (username === "mor_2314" && password === "83r5^_") {
+    if (username === "mor_2314" && password === "a") {
+      // 83r5^_
       getUser();
       setIsAuth(true);
       handleClose();

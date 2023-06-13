@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton, Badge, BadgeProps } from '@mui/material';
 // utils
-import { bgBlur } from '../../../utils/cssStyles';
 // components
 // import Iconify from '../../iconify';
 import Searchbar from '../Searchbar/Searchbar';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import BasketHeader from '../BasketHeader/BasketHeader';
-import Avatar from '@mui/material/Avatar';
 import LoginModal from '../../Login/Modal/LoginModal';
 
 //
@@ -37,17 +35,18 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-Header.propTypes = {
-  onOpenNav: PropTypes.func,
-};
+interface IHeaderNavProps {
+  handleClickMenu: () => void,
+  // onOpenNav: PropTypes.func,
+}
 
-export default function Header()
-   //onOpenNav// }) 
-    {
+const Header: React.FC<IHeaderNavProps> = ( {handleClickMenu }) => {
+  
   return (
     // <StyledRoot>
       <StyledToolbar>
-        <IconButton
+        <IconButton onClick={handleClickMenu}
+        
           // onClick={ //onOpenNav// 
           // }
           sx={{
@@ -94,3 +93,5 @@ export default function Header()
       </StyledToolbar>
   );
 }
+
+export default Header;

@@ -1,5 +1,5 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Navbar from "./Components/Navbar/Navbar";
@@ -18,15 +18,25 @@ import { UserContextProvider } from "./Contexts/Auth/UserData";
 
 
 const App: React.FC = () => {
-
+  const [isMenuClicked, setIsMenuClicked] = useState(false);
+  const handleClickMenu = () => {
+    setIsMenuClicked(!isMenuClicked);
+    console.log(handleClickMenu)
+  } 
   return (
+    
     <UserContextProvider>
       <BasketContextProvider>
         <FavouritesContextProvider>
             <BrowserRouter>
-            <Navbar/>
+            <Navbar
+              isMenuClicked={isMenuClicked}
+              setIsMenuClicked={setIsMenuClicked}
+            />
             <P.AppWrapper1>
-              <Header/>
+              <Header
+                handleClickMenu={handleClickMenu}
+              />
                   <Routes>
                         <Route path="/" element={<MainPage />} />
                         <Route path="/favourites" element={<Favourites />} />
