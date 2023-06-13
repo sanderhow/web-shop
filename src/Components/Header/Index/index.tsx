@@ -10,6 +10,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import BasketHeader from '../BasketHeader/BasketHeader';
 import LoginModal from '../../Login/Modal/LoginModal';
+import FavouriteHeader from '../FavouriteHeader/FavouriteHeader';
+import UserHeader from '../User/UserHeader';
 
 //
 // import Searchbar from './Searchbar';
@@ -41,7 +43,7 @@ interface IHeaderNavProps {
 }
 
 const Header: React.FC<IHeaderNavProps> = ( {handleClickMenu }) => {
-  
+
   return (
     // <StyledRoot>
       <StyledToolbar>
@@ -72,22 +74,12 @@ const Header: React.FC<IHeaderNavProps> = ( {handleClickMenu }) => {
             gap: 2,
           }}
         >
-          <FavoriteIcon
-            sx={{
-              width: 24, 
-              height: 24,
-              color: '#9e9e9e',
-            }}
-          />
+          <FavouriteHeader/>
+          
           <BasketHeader/>
-          {/* <Avatar 
-            src="/broken-image.jpg" 
-            sx={{
-              width: 24, 
-              height: 24
-          }}/> */}
+         
 
-         <LoginModal/>
+         <UserHeader/>
          
         </Stack> 
       </StyledToolbar>

@@ -1,8 +1,8 @@
 import { IconButton, styled } from '@mui/material';
 import React from 'react';
-import { useBasket } from '../../../Contexts/Basket/BasketContext';
 import Badge, { BadgeProps } from '@mui/material/Badge';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useFavourites } from '../../../Contexts/Favourites/FavouritesContext';
 import { useNavigate } from 'react-router-dom';
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
@@ -15,22 +15,22 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
     },
   }));
 
-const BasketHeader: React.FC = () => {
-    const {basketItems, setBasketItems} = useBasket();
-    const itemsInBasket = basketItems?.length;
+const FavouriteHeader: React.FC = () => {
+    const {items, setItems} = useFavourites();
+    const itemsInFav = items?.length;
     const navigate = useNavigate();
   
-    const moveToBasket = () => {
-      navigate(`/basket`);
+    const moveToFav = () => {
+      navigate(`/favourites`);
     }
     
     return (
-        <IconButton aria-label="cart">
-            <StyledBadge onClick={moveToBasket} badgeContent={itemsInBasket} color="secondary">
-                <ShoppingCartIcon />
+        <IconButton aria-label="favorite">
+            <StyledBadge onClick={moveToFav} badgeContent={itemsInFav} color="secondary">
+                <FavoriteIcon />
             </StyledBadge>
         </IconButton>
     );
 }
   
-export default BasketHeader;
+export default FavouriteHeader;

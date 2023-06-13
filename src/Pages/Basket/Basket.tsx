@@ -16,19 +16,24 @@ const Basket = () => {
   const {basketItems, setBasketItems} = useBasket();
       
   let tableItems : IBasketTable[] = [];
-    
-    basketItems?.map((item) => {
-      if (tableItems.some((x) => x.id === item.id)) {
-        const elementDuplicated = tableItems.find(x => x.id === item.id);
-        if (elementDuplicated) {
-          const index = tableItems.indexOf(elementDuplicated);
-          tableItems[index].quantity++;
-        }
-      } else {
-        const newTableItem = { ...item, quantity: 1 };
-        tableItems.push(newTableItem);
+  
+  basketItems?.map((item) => {
+    if (tableItems.some((x) => x.id === item.id)) {
+      const elementDuplicated = tableItems.find(x => x.id === item.id);
+      if (elementDuplicated) {
+        const index = tableItems.indexOf(elementDuplicated);
+        tableItems[index].quantity++;
       }
-    })
+    } else {
+      const newTableItem = { ...item, quantity: 1 };
+      tableItems.push(newTableItem);
+    }
+  })
+  
+  const removeFromBasket = (id: number) => {
+       const newBasketItems = basketItems?.filter(item => item.id !== id );
+       setBasketItems(newBasketItems);
+    }
 
     return (
   <TableContainer component={Paper}>
@@ -57,7 +62,9 @@ const Basket = () => {
         </TableCell>
         <TableCell align="right">
             <IconButton aria-label="delete">
-                <DeleteIcon />
+                <DeleteIcon 
+                  onClick={() => removeFromBasket(x.id)}
+                />
             </IconButton>
         </TableCell>
       </TableRow>

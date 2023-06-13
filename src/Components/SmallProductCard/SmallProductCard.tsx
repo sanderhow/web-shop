@@ -101,8 +101,8 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
   const favouriteRemoved = (event: React.SyntheticEvent) => {
     setIsClickedFav(!isClickedFav);
 
-  const newFavouritesItems = items?.filter(item =>
-    item.id !== id
+  const newFavouritesItems = items?.filter(item => 
+      item.id !== id
     );
     setItems(newFavouritesItems);
 

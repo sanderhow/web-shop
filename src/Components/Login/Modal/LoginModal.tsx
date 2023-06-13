@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import { Avatar } from '@mui/material';
 import ModalTextArea from './ModalTextArea';
 import { useUser } from '../../../Contexts/Auth/UserData';
@@ -40,13 +39,17 @@ const LoginModal = () => {
   return (
     <div>
       <Button onClick={handleOpen}>
-          { <Avatar 
-            src="/broken-image.jpg" 
-            sx={{
-              width: 24, 
-              height: 24
-          }}
-          />}
+          {isAuth ? 
+           <Avatar src="user.jpg" />
+           :
+           <Avatar 
+              src="/broken-image.jpg" 
+              sx={{
+                width: 24, 
+                height: 24
+              }}
+          />
+          }
       </Button>
       {isAuth ?
           <Modal
