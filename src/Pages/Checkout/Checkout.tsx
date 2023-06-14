@@ -1,9 +1,10 @@
 import React from 'react';
+import CheckoutMui from '../../Components/Checkout/CheckoutMui';
 
 const Checkout: React.FC = () => {
     return (
      <div>
-         Checkout
+         <CheckoutMui/>
      </div>
     );
 }

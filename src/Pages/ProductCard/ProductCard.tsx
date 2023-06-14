@@ -12,7 +12,7 @@ import Button from '@mui/joy/Button';
 import Add from '@mui/icons-material/Add';
 import * as P from './parts';
 import Rating from '@mui/material/Rating';
-import { useBasket } from '../../Contexts/Basket/BasketContext';
+import { IBasketTable, useBasket } from '../../Contexts/Basket/BasketContext';
 
 const ProductCard: React.FC = () => {
     const [product, setProduct] = useState<ISampleProduct | null>(null);
@@ -39,15 +39,22 @@ const ProductCard: React.FC = () => {
       setIsAddToCart(!isAddToCart);
   
       if (basketItems && product) {
-        setBasketItems([...basketItems, product]);
-        console.log(basketItems);
+        if (basketItems.some((x) => x.id === product.id)) {
+          const elementDuplicated = basketItems.find(x => x.id === product.id);
+          if (elementDuplicated) {
+            elementDuplicated.quantity++;
+          }
+        } else {
+          const newTableItem: IBasketTable = { ...product, quantity: 1 };
+          basketItems.push(newTableItem);
+        }
+        // setBasketItems([...basketItems, product]);
+        // console.log(basketItems);
       }
   
       event.preventDefault();
       event.stopPropagation();
   }
-
-
 
   return (
     <Card variant="outlined" sx={{ width: 620, maxHeight: 720, m: 4, p: 4, borderRadius: '32px', boxShadow: 3, display: 'flex', flexDirection: 'column', }}>

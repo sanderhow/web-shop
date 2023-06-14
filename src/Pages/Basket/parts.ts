@@ -10,3 +10,6 @@ export const BasketWrapper = styled.div`
     gap: 20px;
 `;
 
+export const ButtonWrapper = styled.div`
+    margin-left: auto;
+`;

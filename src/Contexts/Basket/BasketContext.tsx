@@ -1,16 +1,18 @@
 import { createContext, PropsWithChildren, useContext, useMemo, useState } from "react";
 import { ISampleProduct } from "../../Components/SmallProductCard/SmallProductCard";
 
+export type IBasketTable = ISampleProduct & { quantity: number };
+
 interface IBasketContext {
-    basketItems: ISampleProduct[] | undefined;
-    setBasketItems(items: ISampleProduct[] | undefined): void;
+    basketItems: IBasketTable[] | undefined;
+    setBasketItems(items: IBasketTable[] | undefined): void;
 }
 
 const BasketContext = createContext<IBasketContext | undefined>(undefined)
 BasketContext.displayName = "BasketContext";
 
 export const BasketContextProvider = ({ children } : PropsWithChildren) => {
-    const [basketItems, setBasketItems] = useState<ISampleProduct[] | undefined>([]);
+    const [basketItems, setBasketItems] = useState<IBasketTable[] | undefined>([]);
     
     const contextData: IBasketContext = useMemo(
         () => ({

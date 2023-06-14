@@ -1,41 +1,36 @@
-import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import React, { useState } from 'react';
+import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import React, { useCallback, useEffect, useState } from 'react';
 import SmallProductCard, { ISampleProduct } from '../../Components/SmallProductCard/SmallProductCard';
-import { useBasket } from '../../Contexts/Basket/BasketContext';
+import { IBasketTable, useBasket } from '../../Contexts/Basket/BasketContext';
 import * as P from './parts';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Dropdown1 from '../../Components/Dropdown/Dropdown1';
 // import Dropdown1 from '../../Components/Dropdown/Dropdown';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 
 
-export type IBasketTable = ISampleProduct & { quantity: number };
 
 
 const Basket = () => {
-    
   const {basketItems, setBasketItems} = useBasket();
       
-  let tableItems : IBasketTable[] = [];
-  
-  basketItems?.map((item) => {
-    if (tableItems.some((x) => x.id === item.id)) {
-      const elementDuplicated = tableItems.find(x => x.id === item.id);
-      if (elementDuplicated) {
-        const index = tableItems.indexOf(elementDuplicated);
-        tableItems[index].quantity++;
-      }
-    } else {
-      const newTableItem = { ...item, quantity: 1 };
-      tableItems.push(newTableItem);
-    }
-  })
-  
   const removeFromBasket = (id: number) => {
        const newBasketItems = basketItems?.filter(item => item.id !== id );
        setBasketItems(newBasketItems);
     }
+  
+  const totalBasketSum = useCallback(() => {
+    let sum = 0;
+    basketItems?.forEach(x => sum += (x.price * x.quantity));
+    return sum;
+  },[basketItems])
+
+  useEffect(() => {
+    totalBasketSum();
+  }, [basketItems]);
 
     return (
+<P.BasketWrapper>
   <TableContainer component={Paper}>
   <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
   <TableHead>
@@ -45,12 +40,14 @@ const Basket = () => {
       <TableCell align="right">Price&nbsp;($)</TableCell>
       <TableCell align="right">Quantity&nbsp;</TableCell>
       <TableCell align="right">Basket&nbsp;</TableCell>
+      <TableCell align="right">Total&nbsp;($)</TableCell>
     </TableRow>
+
   </TableHead>
   <TableBody>
-    {tableItems && tableItems.map((x, id) => (
+    {basketItems && basketItems.map((x, id) => (
       <TableRow
-        key={id}
+      key={id}
       >
         <TableCell component="th" scope="row">
           <img src={x.image} alt='productImage' width='40' height='40' />
@@ -58,20 +55,44 @@ const Basket = () => {
         <TableCell align="right">{x.title}</TableCell>
         <TableCell align="right">{x.price}</TableCell>
         <TableCell align="right">
-           <Dropdown1 quantity={x.quantity} />
+           <Dropdown1 
+              quantity={x.quantity} 
+              id={x.id}/>
         </TableCell>
         <TableCell align="right">
             <IconButton aria-label="delete">
                 <DeleteIcon 
                   onClick={() => removeFromBasket(x.id)}
-                />
+                  />
             </IconButton>
         </TableCell>
+        <TableCell align="right">{x.price*x.quantity}</TableCell>
       </TableRow>
     ))}
+      {/* <TableRow>
+        <TableCell align="right">TOTAL</TableCell>
+      </TableRow> */}
+    
+    <TableRow>
+        <TableCell align="right"></TableCell>
+        <TableCell align="right"></TableCell>
+        <TableCell align="right"></TableCell>
+        <TableCell align="right"></TableCell>
+        <TableCell align="right"></TableCell>
+        <TableCell 
+          sx = {{ fontWeight: 'bold', fontSize: 'h6.fontSize' }}
+          align="right">{`${totalBasketSum()}$`}</TableCell>
+    </TableRow>
+    
   </TableBody>
 </Table>
 </TableContainer>
+<P.ButtonWrapper>
+  <Button variant="contained" startIcon={<ShoppingBasketIcon />}>
+      Proceed to checkout
+  </Button>
+</P.ButtonWrapper>
+</P.BasketWrapper>
 );
 }
   

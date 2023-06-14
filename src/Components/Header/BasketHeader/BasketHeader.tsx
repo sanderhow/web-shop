@@ -1,5 +1,5 @@
 import { IconButton, styled } from '@mui/material';
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useBasket } from '../../../Contexts/Basket/BasketContext';
 import Badge, { BadgeProps } from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -15,18 +15,39 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
     },
   }));
 
-const BasketHeader: React.FC = () => {
-    const {basketItems, setBasketItems} = useBasket();
-    const itemsInBasket = basketItems?.length;
-    const navigate = useNavigate();
   
-    const moveToBasket = () => {
-      navigate(`/basket`);
-    }
+  const BasketHeader: React.FC = () => {
+    const {basketItems, setBasketItems} = useBasket();
+    const navigate = useNavigate();
     
+    
+    const getNumberOfElements = useCallback(() => {
+      let sum = 0;
+      if (basketItems) {
+        basketItems?.forEach(x => sum += x.quantity);
+        //  for (var i = 0; i < basketItems.length; i++) {
+          //   sum += basketItems[i].quantity;
+          // } 
+        }
+        return sum;
+      },[basketItems]) 
+      
+      useEffect(() => {
+        getNumberOfElements();
+      }, [basketItems]);
+         
+       const itemsInBasket = getNumberOfElements();
+       console.log(itemsInBasket);
+       
+       const moveToBasket = () => {
+         navigate(`/basket`);
+       }
+
     return (
         <IconButton aria-label="cart">
-            <StyledBadge onClick={moveToBasket} badgeContent={itemsInBasket} color="secondary">
+            <StyledBadge onClick={moveToBasket} 
+              badgeContent={itemsInBasket} 
+              color="secondary">
                 <ShoppingCartIcon />
             </StyledBadge>
         </IconButton>

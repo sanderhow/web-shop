@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import Rating from '@mui/material/Rating';
 import { pink } from '@mui/material/colors';
 import { useFavourites } from '../../Contexts/Favourites/FavouritesContext';
-import { useBasket } from '../../Contexts/Basket/BasketContext';
+import { IBasketTable, useBasket } from '../../Contexts/Basket/BasketContext';
 
 
 // ----------------------------------------------------------------------
@@ -120,7 +120,18 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
     setIsClickedBag(true);
 
     if (basketItems && product) {
-      setBasketItems([...basketItems, product]);
+      if (basketItems.some((x) => x.id === id)) {
+        const copyBasketItems = Array.from(basketItems);
+        const elementDuplicated = copyBasketItems.find(x => x.id === id);
+        if (elementDuplicated) {
+          elementDuplicated.quantity++;
+        }
+        setBasketItems(copyBasketItems);
+      } else {
+        const newTableItem: IBasketTable = { ...product, quantity: 1 };
+        // basketItems.push(newTableItem);
+        setBasketItems([...basketItems,newTableItem]);
+      }
     }
 
     event.preventDefault();
