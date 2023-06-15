@@ -1,9 +1,12 @@
 import React from 'react';
+import ProductHero from './ProductHero/ProductHero';
 
 const MainPage: React.FC = () => {
     return (
      <div>
-         MainPage
+         <React.Fragment>
+            <ProductHero />
+        </React.Fragment>
      </div>
     );
 }
