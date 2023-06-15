@@ -1,24 +1,11 @@
-import PropTypes from 'prop-types';
-// @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton, Badge, BadgeProps } from '@mui/material';
-// utils
-// components
-// import Iconify from '../../iconify';
+import { Box, Stack, Toolbar, IconButton } from '@mui/material';
 import Searchbar from '../Searchbar/Searchbar';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import BasketHeader from '../BasketHeader/BasketHeader';
-import LoginModal from '../../Login/Modal/LoginModal';
 import FavouriteHeader from '../FavouriteHeader/FavouriteHeader';
 import UserHeader from '../User/UserHeader';
-
-//
-// import Searchbar from './Searchbar';
-// import AccountPopover from './AccountPopover';
-// import LanguagePopover from './LanguagePopover';
-// import NotificationsPopover from './NotificationsPopover';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
 // ----------------------------------------------------------------------
 
 const NAV_WIDTH = 280;
@@ -42,25 +29,23 @@ interface IHeaderNavProps {
   // onOpenNav: PropTypes.func,
 }
 
-const Header: React.FC<IHeaderNavProps> = ( {handleClickMenu }) => {
+const Header: React.FC<IHeaderNavProps> = ({handleClickMenu }) => {
+
+  const isMobileScreen = useMediaQuery('(max-width:800px)');
 
   return (
     // <StyledRoot>
       <StyledToolbar>
+        {isMobileScreen ?
         <IconButton onClick={handleClickMenu}
         
-          // onClick={ //onOpenNav// 
-          // }
-          sx={{
-            // ml: 1,
-            color: '#9e9e9e',
-            // display: { lg: 'none' },
-          }}
-        >
+        // onClick={ //onOpenNav// 
+        // }
+        sx={{ color: '#9e9e9e' }}>
           <DragHandleIcon/>
-          {/* <Iconify icon="eva:menu-2-fill" /> */}
-        </IconButton>
-
+        </IconButton> :
+        undefined
+        }
         <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
 
@@ -70,17 +55,12 @@ const Header: React.FC<IHeaderNavProps> = ( {handleClickMenu }) => {
           sx={{
             xs: 0.5,
             sm: 1,
-            // mr: 10,
             gap: 2,
           }}
         >
           <FavouriteHeader/>
-          
           <BasketHeader/>
-         
-
-         <UserHeader/>
-         
+          <UserHeader/>
         </Stack> 
       </StyledToolbar>
   );

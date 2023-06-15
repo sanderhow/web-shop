@@ -1,6 +1,5 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Navbar from "./Components/Navbar/Navbar";
 import MainPage from "./Pages/MainPage/MainPage";
@@ -49,7 +48,9 @@ const App: React.FC = () => {
             </P.AppWrapper1>
             </BrowserRouter>
           <P.AppWrapper2>
-              {/* {© COPYRIGHT {new Date().getFullYear()} */}
+          {/* © COPYRIGHT  */}
+              {/* {`${product?.price}$`} */}
+              {/* {`© COPYRIGHT ${new Date().getFullYear()}`} */}
           </P.AppWrapper2>
         </FavouritesContextProvider>
       </BasketContextProvider>

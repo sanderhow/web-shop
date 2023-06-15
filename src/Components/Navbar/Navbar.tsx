@@ -4,6 +4,7 @@ import { useUser } from '../../Contexts/Auth/UserData';
 import NavSection from '../Nav-section/NavSection';
 import * as P from "./parts";
 import { stringAvatar } from '../../utils/utils';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const StyledAccount = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -17,28 +18,23 @@ const navConfig = [
     {
       title: 'Main page',
       path: '/',
-    //   icon: icon('ic_analytics'),
     },
     {
       title: 'Favourites',
       path: '/favourites',
-    //   icon: icon('ic_user'),
     },
     {
       title: 'Basket',
       path: '/basket',
-    //   icon: icon('ic_cart'),
     },
     
     {
       title: 'Listing',
       path: '/listing',
-    //   icon: icon('ic_lock'),
     },
     {
       title: 'Checkout',
       path: '/checkout',
-    //   icon: icon('ic_disabled'),
     },
   ];
 
@@ -51,6 +47,7 @@ const navConfig = [
 const Navbar: React.FC<INavbarProps> = ({ isMenuClicked, setIsMenuClicked }) => {
   const { userItems, isAuth } = useUser();
   const isMobile = window.innerWidth < 1000;
+  const isMobileScreen = useMediaQuery('(max-width:800px)');
   const renderContent = (
         <div
         //   sx={{
@@ -68,8 +65,8 @@ const Navbar: React.FC<INavbarProps> = ({ isMenuClicked, setIsMenuClicked }) => 
                 {userItems && isAuth?
                   <Avatar {...stringAvatar(`${userItems.name.firstname} ${userItems.name.lastname}`)} />
                 :
-                <Typography variant="h6" component="h2">
-                  Welcome back!
+                <Typography sx= {{ fontSize: 16, fontWeight: 'bold' }} component="h2">
+                  welcome back!
                 </Typography>
                 }
                 
@@ -85,7 +82,6 @@ const Navbar: React.FC<INavbarProps> = ({ isMenuClicked, setIsMenuClicked }) => 
               </StyledAccount>
             </Link>
           </Box>
-    
           <NavSection data={navConfig} />
     
           <Box sx={{ flexGrow: 1 }} />

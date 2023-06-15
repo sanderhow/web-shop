@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 // @mui
 import { Box, Card, Link, Typography, Stack } from '@mui/material';
@@ -7,7 +6,6 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import ProductCard from '../../Pages/ProductCard/ProductCard';
 import { useNavigate } from "react-router-dom";
 import Rating from '@mui/material/Rating';
 import { pink } from '@mui/material/colors';
@@ -121,15 +119,13 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
 
     if (basketItems && product) {
       if (basketItems.some((x) => x.id === id)) {
-        const copyBasketItems = Array.from(basketItems);
-        const elementDuplicated = copyBasketItems.find(x => x.id === id);
+        const elementDuplicated = basketItems.find(x => x.id === id);
         if (elementDuplicated) {
           elementDuplicated.quantity++;
         }
-        setBasketItems(copyBasketItems);
+        setBasketItems([...basketItems]);
       } else {
         const newTableItem: IBasketTable = { ...product, quantity: 1 };
-        // basketItems.push(newTableItem);
         setBasketItems([...basketItems,newTableItem]);
       }
     }
@@ -199,7 +195,7 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
               {Math.round(price + 10)}
             </Typography>
             &nbsp;
-            {price}
+            {`${price}$`}
           </Typography>
         </Stack>
         <Box
@@ -208,7 +204,6 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
           mt: 0.5
         }}
       >
-        {/* <Typography component="legend">Read only</Typography> */}
         <Rating name="size-small" defaultValue={2} size="small" value={rating.rate} readOnly />
         </Box>
       </Stack>
