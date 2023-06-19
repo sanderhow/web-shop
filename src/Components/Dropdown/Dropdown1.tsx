@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
@@ -12,6 +12,7 @@ interface Dropdown1Props {
 
 const Dropdown1: React.FC<Dropdown1Props> = ({ quantity, id }) => {
   const {basketItems, setBasketItems} = useBasket();
+
   const handleBasketQuantity = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
 
@@ -25,6 +26,10 @@ const Dropdown1: React.FC<Dropdown1Props> = ({ quantity, id }) => {
     }         
   }
 
+  // useEffect(() => {
+    // totalBasketSum();
+  // }, [basketItems]);
+
   return (
     <Box sx={{ minWidth: 120, fontFamily: `"Roboto","Helvetica","Arial",sans-serif`, fontSize: 0.875 }}>
       <FormControl required fullWidth>
@@ -33,7 +38,7 @@ const Dropdown1: React.FC<Dropdown1Props> = ({ quantity, id }) => {
         </InputLabel>
         <NativeSelect 
           onChange={handleBasketQuantity}
-          defaultValue={quantity}
+          value={quantity}
           inputProps={{
             name: 'quantity',
             id: 'uncontrolled-native',

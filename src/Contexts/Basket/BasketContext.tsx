@@ -1,4 +1,5 @@
-import { createContext, PropsWithChildren, useContext, useMemo, useState } from "react";
+import Cookies from "js-cookie";
+import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
 import { ISampleProduct } from "../../Components/SmallProductCard/SmallProductCard";
 
 export type IBasketTable = ISampleProduct & { quantity: number };
@@ -13,6 +14,14 @@ BasketContext.displayName = "BasketContext";
 
 export const BasketContextProvider = ({ children } : PropsWithChildren) => {
     const [basketItems, setBasketItems] = useState<IBasketTable[] | undefined>([]);
+
+    useEffect(() => {
+        const readCookie = Cookies.get('basketCookie');
+        if (readCookie) {
+            const arrayBasketCookie = JSON.parse(readCookie);
+            setBasketItems(arrayBasketCookie);
+        }
+    }, []);
     
     const contextData: IBasketContext = useMemo(
         () => ({

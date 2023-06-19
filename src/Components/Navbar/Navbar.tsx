@@ -46,7 +46,6 @@ const navConfig = [
 
 const Navbar: React.FC<INavbarProps> = ({ isMenuClicked, setIsMenuClicked }) => {
   const { userItems, isAuth } = useUser();
-  const isMobile = window.innerWidth < 1000;
   const isMobileScreen = useMediaQuery('(max-width:800px)');
   const renderContent = (
         <div
@@ -91,7 +90,7 @@ const Navbar: React.FC<INavbarProps> = ({ isMenuClicked, setIsMenuClicked }) => 
       console.log(isMenuClicked);
     return (
       <P.Wrapper>
-        {isMobile ? 
+        {isMobileScreen ? 
           <Drawer
           open={isMenuClicked}
           variant="temporary"

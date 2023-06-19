@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const BasketWrapper = styled.div`
-    display: flex;
+    display: contents;
     /* flex-direction: column; */
     justify-content: center;
     flex-wrap: wrap;
@@ -12,4 +12,5 @@ export const BasketWrapper = styled.div`
 
 export const ButtonWrapper = styled.div`
     margin-left: auto;
+    margin-top: 20px;
 `;

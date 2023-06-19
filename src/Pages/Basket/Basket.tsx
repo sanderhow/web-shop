@@ -1,18 +1,19 @@
 import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useBasket } from '../../Contexts/Basket/BasketContext';
 import * as P from './parts';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Dropdown1 from '../../Components/Dropdown/Dropdown1';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { useNavigate } from 'react-router-dom';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 
 const Basket = () => {
   const {basketItems, setBasketItems} = useBasket();
   const navigate = useNavigate();
+  const isMobileScreen = useMediaQuery('(max-width:800px)');
       
   const removeFromBasket = (id: number) => {
        const newBasketItems = basketItems?.filter(item => item.id !== id );
@@ -27,7 +28,7 @@ const Basket = () => {
 
   useEffect(() => {
     totalBasketSum();
-  }, [basketItems]);
+  }, [basketItems, totalBasketSum]);
 
   const goToCheckout = () => {
     navigate(`/checkout`);
@@ -36,7 +37,7 @@ const Basket = () => {
     return (
 <P.BasketWrapper>
   <TableContainer component={Paper}>
-  <Table sx={{ minWidth: 1000 }} size="medium" aria-label="a dense table">
+  <Table sx={{ minWidth: 1000, }} size="medium" aria-label="a dense table">
   <TableHead>
     <TableRow>
       <TableCell>Image</TableCell>

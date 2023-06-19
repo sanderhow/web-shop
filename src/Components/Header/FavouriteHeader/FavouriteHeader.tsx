@@ -16,7 +16,7 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   }));
 
 const FavouriteHeader: React.FC = () => {
-    const {items, setItems} = useFavourites();
+    const {items} = useFavourites();
     const itemsInFav = items?.length;
     const navigate = useNavigate();
   

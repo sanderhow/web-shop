@@ -11,7 +11,7 @@ import Rating from '@mui/material/Rating';
 import { pink } from '@mui/material/colors';
 import { useFavourites } from '../../Contexts/Favourites/FavouritesContext';
 import { IBasketTable, useBasket } from '../../Contexts/Basket/BasketContext';
-
+import Cookies from 'js-cookie';
 
 // ----------------------------------------------------------------------
 
@@ -90,6 +90,8 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
       if (items && product) {
        
         setItems([...items, product]);
+        const jsonFavouritesCookie = JSON.stringify([...items, product]);
+        Cookies.set('favouritesCookie', jsonFavouritesCookie, { expires: 2000 });
       }
       
       event.preventDefault();
@@ -103,6 +105,8 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
       item.id !== id
     );
     setItems(newFavouritesItems);
+    const jsonFavouritesCookie = JSON.stringify(newFavouritesItems);
+    Cookies.set('favouritesCookie', jsonFavouritesCookie, { expires: 2000 });
 
     event.preventDefault();
     event.stopPropagation();
@@ -124,9 +128,14 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({ product, isBasket,
           elementDuplicated.quantity++;
         }
         setBasketItems([...basketItems]);
+        const jsonBasketCookie = JSON.stringify([...basketItems]);
+        Cookies.set('basketCookie', jsonBasketCookie, { expires: 2000 });
+
       } else {
         const newTableItem: IBasketTable = { ...product, quantity: 1 };
         setBasketItems([...basketItems,newTableItem]);
+        const jsonBasketCookie = JSON.stringify([...basketItems,newTableItem]);
+        Cookies.set('basketCookie', jsonBasketCookie, { expires: 2000 });
       }
     }
 

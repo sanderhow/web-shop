@@ -1,4 +1,5 @@
-import { createContext, PropsWithChildren, useContext, useMemo, useState } from "react";
+import Cookies from "js-cookie";
+import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
 import { ISampleProduct } from "../../Components/SmallProductCard/SmallProductCard";
 
 interface IFavouritesContext {
@@ -12,6 +13,14 @@ FavouritesContext.displayName = "FavouritesContext";
 export const FavouritesContextProvider = ({ children } : PropsWithChildren) => {
     const [items, setItems] = useState<ISampleProduct[] | undefined>([]);
     
+    useEffect(() => {
+        const readCookie = Cookies.get('favouritesCookie');
+        if (readCookie) {
+            const arrayFavCookie = JSON.parse(readCookie);
+            setItems(arrayFavCookie);
+        }
+    }, []);
+
     const contextData: IFavouritesContext = useMemo(
         () => ({
             items,
