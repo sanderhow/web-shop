@@ -48,12 +48,7 @@ const Navbar: React.FC<INavbarProps> = ({ isMenuClicked, setIsMenuClicked }) => 
   const { userItems, isAuth } = useUser();
   const isMobileScreen = useMediaQuery('(max-width:800px)');
   const renderContent = (
-        <div
-        //   sx={{
-        //     height: 1,
-        //     '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
-        //   }}
-        >
+        <div>
           <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
             {/* <Logo /> */}
           </Box>
@@ -87,7 +82,6 @@ const Navbar: React.FC<INavbarProps> = ({ isMenuClicked, setIsMenuClicked }) => 
     
         </div>
       );
-      console.log(isMenuClicked);
     return (
       <P.Wrapper>
         {isMobileScreen ? 

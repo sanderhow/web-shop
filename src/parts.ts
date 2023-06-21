@@ -6,8 +6,10 @@ export const AppWrapper1 = styled.div`
     width: 100%;
     min-height: 100vh;
     margin: 10px 100px;
+    padding-left: 300px;
     @media (max-width: 800px) {
         margin: 10px 30px;
+        padding-left: 10px;
     }
     z-index: 1;
 `;

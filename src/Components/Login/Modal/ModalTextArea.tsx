@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { Container } from "@mui/material";
+import { Container, useMediaQuery } from "@mui/material";
 import { IUserData } from "../../SmallProductCard/SmallProductCard";
 import axios from "axios";
 import { useUser } from "../../../Contexts/Auth/UserData";
@@ -20,6 +20,7 @@ interface IModalTextAreaProps {
 
 const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
   const { setUserItems, setIsAuth } = useUser();
+  const isMobileScreen = useMediaQuery('(max-width:1200px)');
   
   const getUser = async () => {
       const { data } = await axios.get<IUserData>(`https://fakestoreapi.com/users/1`);
@@ -44,27 +45,32 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
     <Container component="main" maxWidth="lg" >
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 2,
+          marginBottom: 2,
         }}
       >
         <Grid container>
           <CssBaseline />
-          <Grid
-            item
-            xs={false}
-            sm={4}
-            md={7}
-            sx={{
-              backgroundImage: "url(https://nordvpn.com/wp-content/uploads/blog-featured-nordvpn-login-and-sign-up-process-explained-1.svg)",
-              backgroundRepeat: "no-repeat",
-              backgroundColor: (t) =>
-                t.palette.mode === "light"
-                  ? t.palette.grey[50]
-                  : t.palette.grey[700],
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
+          {isMobileScreen ?
+            undefined
+          :
+            <Grid
+              item
+              xs={false}
+              sm={4}
+              md={7}
+              sx={{
+                backgroundImage: "url(https://nordvpn.com/wp-content/uploads/blog-featured-nordvpn-login-and-sign-up-process-explained-1.svg)",
+                backgroundRepeat: "no-repeat",
+                backgroundColor: (t) =>
+                  t.palette.mode === "light"
+                    ? t.palette.grey[50]
+                    : t.palette.grey[700],
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+          }
           <Grid
             item
             xs={12}

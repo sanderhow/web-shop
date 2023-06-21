@@ -16,18 +16,6 @@ import AddressForm from './AddressForm';
 import PaymentForm from './Payment';
 import Review from './Review';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const steps = ['Shipping address', 'Payment details'];
 // 'Review your order'
@@ -39,8 +27,6 @@ function getStepContent(step: number) {
       return <AddressForm />;
     case 1:
       return <PaymentForm />;
-    // case 2:
-    //   return <Review />;
     default:
       throw new Error('Unknown step');
   }
@@ -48,7 +34,7 @@ function getStepContent(step: number) {
 
 const defaultTheme = createTheme();
 
-export default function CheckoutMui() {
+const CheckoutMui = () => {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -105,8 +91,9 @@ export default function CheckoutMui() {
             </React.Fragment>
           )}
         </Paper>
-        {/* <Copyright /> */}
       </Container>
     </ThemeProvider>
   );
 }
+
+export default CheckoutMui;
