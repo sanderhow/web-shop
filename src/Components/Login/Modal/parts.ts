@@ -1,13 +1,11 @@
 import styled from "@emotion/styled";
 
 export const UserDataWrapper = styled.div`
-    display: none
+  display: none;
 `;
 
 export const ModalWrapper = styled.div`
-
-@media (max-width: 800px) {
+  @media (max-width: 800px) {
     width: 200px;
-    /* display: none */
-}
+  }
 `;

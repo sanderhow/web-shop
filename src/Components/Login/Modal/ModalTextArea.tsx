@@ -15,24 +15,29 @@ import { useUser } from "../../../Contexts/Auth/UserData";
 import React from "react";
 
 interface IModalTextAreaProps {
-  handleClose: () => void,
+  handleClose: () => void;
 }
 
 const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
   const { setUserItems, setIsAuth } = useUser();
-  const isMobileScreen = useMediaQuery('(max-width:1200px)');
-  
+  const isMobileScreen = useMediaQuery("(max-width:1200px)");
+
   const getUser = async () => {
-      const { data } = await axios.get<IUserData>(`https://fakestoreapi.com/users/1`);
-      setUserItems(data);
+    const { data } = await axios.get<IUserData>(
+      `https://fakestoreapi.com/users/1`
+    );
+    setUserItems(data);
   };
-  
-  const handleSubmit = (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
+
+  const handleSubmit = (event: {
+    preventDefault: () => void;
+    currentTarget: HTMLFormElement | undefined;
+  }) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const username = data.get("username");
     const password = data.get("password");
-    
+
     if (username === "mor_2314" && password === "a") {
       // 83r5^_
       getUser();
@@ -40,9 +45,9 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
       handleClose();
     }
   };
-   
+
   return (
-    <Container component="main" maxWidth="lg" >
+    <Container component="main" maxWidth="lg">
       <Box
         sx={{
           marginTop: 2,
@@ -51,16 +56,15 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
       >
         <Grid container>
           <CssBaseline />
-          {isMobileScreen ?
-            undefined
-          :
+          {isMobileScreen ? undefined : (
             <Grid
               item
               xs={false}
               sm={4}
               md={7}
               sx={{
-                backgroundImage: "url(https://nordvpn.com/wp-content/uploads/blog-featured-nordvpn-login-and-sign-up-process-explained-1.svg)",
+                backgroundImage:
+                  "url(https://nordvpn.com/wp-content/uploads/blog-featured-nordvpn-login-and-sign-up-process-explained-1.svg)",
                 backgroundRepeat: "no-repeat",
                 backgroundColor: (t) =>
                   t.palette.mode === "light"
@@ -70,7 +74,7 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
                 backgroundPosition: "center",
               }}
             />
-          }
+          )}
           <Grid
             item
             xs={12}
@@ -96,8 +100,8 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
                 component="form"
                 noValidate
                 onSubmit={handleSubmit}
-                sx={{ mt: 1 }}>
-              
+                sx={{ mt: 1 }}
+              >
                 <TextField
                   margin="normal"
                   required
@@ -126,7 +130,7 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2, backgroundColor: '#b8b5b5' }}
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#b8b5b5" }}
                 >
                   Sign In
                 </Button>
@@ -149,6 +153,6 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
       </Box>
     </Container>
   );
-}
+};
 
 export default ModalTextArea;

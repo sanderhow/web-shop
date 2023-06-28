@@ -1,4 +1,3 @@
 import styled from "@emotion/styled";
 
-export const PriceButtonsWrapper = styled.div`
-`;
+export const PriceButtonsWrapper = styled.div``;

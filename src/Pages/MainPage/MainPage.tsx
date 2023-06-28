@@ -1,14 +1,14 @@
-import React from 'react';
-import ProductHero from './ProductHero/ProductHero';
+import React from "react";
+import ProductHero from "./ProductHero/ProductHero";
 
 const MainPage: React.FC = () => {
-    return (
-     <div>
-         <React.Fragment>
-            <ProductHero />
-        </React.Fragment>
-     </div>
-    );
-}
-  
+  return (
+    <div>
+      <React.Fragment>
+        <ProductHero />
+      </React.Fragment>
+    </div>
+  );
+};
+
 export default MainPage;

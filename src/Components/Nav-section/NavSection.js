@@ -1,11 +1,7 @@
-import PropTypes from 'prop-types';
-import { NavLink as RouterLink } from 'react-router-dom';
-// @mui
-import { Box, List, ListItemText } from '@mui/material';
-//
-import { StyledNavItem, StyledNavItemIcon } from './parts';
-
-// ----------------------------------------------------------------------
+import PropTypes from "prop-types";
+import { NavLink as RouterLink } from "react-router-dom";
+import { Box, List, ListItemText } from "@mui/material";
+import { StyledNavItem, StyledNavItemIcon } from "./parts";
 
 NavSection.propTypes = {
   data: PropTypes.array,
@@ -23,8 +19,6 @@ export default function NavSection({ data = [], ...other }) {
   );
 }
 
-// ----------------------------------------------------------------------
-
 NavItem.propTypes = {
   item: PropTypes.object,
 };
@@ -37,10 +31,10 @@ function NavItem({ item }) {
       component={RouterLink}
       to={path}
       sx={{
-        '&.active': {
-          color: 'text.primary',
-          bgcolor: 'action.selected',
-          fontWeight: 'fontWeightBold',
+        "&.active": {
+          color: "text.primary",
+          bgcolor: "action.selected",
+          fontWeight: "fontWeightBold",
         },
       }}
     >
