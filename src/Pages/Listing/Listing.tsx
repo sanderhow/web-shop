@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import SmallProductCard, {
   ISampleProduct,
 } from "../../Components/SmallProductCard/SmallProductCard";
+import { getProductsUrl } from "../../utils/paths";
 import * as P from "./parts";
 
 const Listing: React.FC = () => {
@@ -10,9 +11,7 @@ const Listing: React.FC = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-      const { data } = await axios.get<ISampleProduct[]>(
-        "https://fakestoreapi.com/products"
-      );
+      const { data } = await axios.get<ISampleProduct[]>(getProductsUrl);
       setAllProducts(data);
     };
 

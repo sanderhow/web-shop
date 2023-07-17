@@ -1,17 +1,19 @@
-# General Info
+# Teaser
 
-Project that I've been created is a prototype of web shop application with products from fake API (you can find them on 'Listing' page). App allows to add products to favourites and basket, and remove them accordingly. When you click on specific product, you will find product card. You can log in to the web shop by username, came from API as well.
+Project that I've been created is a prototype of web shop application with products from fake API (you can find them on 'Listing' page). App allows to add products to favourites and basket, and remove them accordingly. When you click on specific product, you will find product card. You can log in to the web shop by credentials written down below.
 
-# Technologies
+Deploy: https://64b59a4aa03fbc4d7e5d5828--serene-phoenix-cc126a.netlify.app/
+
+# Tech Stack
 
 In this project I included:
 
 - React Hooks
-- Type Script
-- API Context
-- Cookies
-- MUI components
-- Test
+- TypeScript
+- React API Context
+- Cookies management
+- Data from REST API
+- Material UI components
 
 # Setup
 
@@ -22,9 +24,5 @@ To run this project, please:
 
 To sign in, please use username and password:
 
-- username: mor_2314
+- username: john
 - password: a
-
-App is avaiable on:
-
-- http://localhost:3000/

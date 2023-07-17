@@ -11,6 +11,7 @@ import * as P from "./parts";
 import Rating from "@mui/material/Rating";
 import { IBasketTable, useBasket } from "../../Contexts/Basket/BasketContext";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { getSimpleProductUrl } from "../../utils/paths";
 
 const ProductCard: React.FC = () => {
   const [product, setProduct] = useState<ISampleProduct | null>(null);
@@ -22,7 +23,7 @@ const ProductCard: React.FC = () => {
   useEffect(() => {
     const getProduct = async () => {
       const { data } = await axios.get<ISampleProduct>(
-        `https://fakestoreapi.com/products/${id}`
+        `${getSimpleProductUrl}${id}`
       );
       setProduct(data);
       setRating(data.rating.rate);

@@ -6,9 +6,6 @@ import { useMediaQuery } from "@mui/material";
 import { translations } from "../../../utils/translations";
 import ProductMainPageLayout from "./ProductMainPageLayout";
 
-const backgroundImage =
-  "https://images.squarespace-cdn.com/content/v1/5a9316f3ec4eb7af0927c395/1623753550865-V46BDME5QXAROCT94RLP/Get+in+touch+to+book+a+shoot";
-
 export default function ProductMainPage() {
   const isMobileScreen = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
@@ -20,7 +17,7 @@ export default function ProductMainPage() {
   return (
     <ProductMainPageLayout
       sxBackground={{
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: `url(background.jpeg)`,
         backgroundPosition: "center",
       }}
     >

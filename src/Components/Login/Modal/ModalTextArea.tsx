@@ -14,6 +14,7 @@ import axios from "axios";
 import { useUser } from "../../../Contexts/Auth/UserData";
 import React from "react";
 import { translations } from "../../../utils/translations";
+import { getUserUrl } from "../../../utils/paths";
 
 interface IModalTextAreaProps {
   handleClose: () => void;
@@ -25,9 +26,7 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
   const isTabletOrMobileScreen = useMediaQuery("(max-width:1000px)");
 
   const getUser = async () => {
-    const { data } = await axios.get<IUserData>(
-      `https://fakestoreapi.com/users/1`
-    );
+    const { data } = await axios.get<IUserData>(getUserUrl);
     setUserItems(data);
   };
 
@@ -40,8 +39,7 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
     const username = data.get("username");
     const password = data.get("password");
 
-    if (username === "mor_2314" && password === "a") {
-      // 83r5^_
+    if (username === "john" && password === "a") {
       getUser();
       setIsAuth(true);
       handleClose();
