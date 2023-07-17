@@ -1,14 +1,15 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../Components/Button/Button";
-import ProductHeroLayout from "./ProductHeroLayout";
 import Typography from "../../../Components/Typography/Typography";
 import { useMediaQuery } from "@mui/material";
+import { translations } from "../../../utils/translations";
+import ProductMainPageLayout from "./ProductMainPageLayout";
 
 const backgroundImage =
   "https://images.squarespace-cdn.com/content/v1/5a9316f3ec4eb7af0927c395/1623753550865-V46BDME5QXAROCT94RLP/Get+in+touch+to+book+a+shoot";
 
-export default function ProductHero() {
+export default function ProductMainPage() {
   const isMobileScreen = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
 
@@ -16,34 +17,21 @@ export default function ProductHero() {
     navigate(`/listing`);
   };
 
-
   return (
-    <ProductHeroLayout
+    <ProductMainPageLayout
       sxBackground={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundPosition: "center",
       }}
     >
-      {isMobileScreen ? (
-        <Typography
+      <Typography
         sx={{ fontWeight: "bold" }}
         color="inherit"
         align="center"
-        variant="h2"
-        >
-          UPGRADE YOUR HOME SPACE
-        </Typography>
-        ) :
-        (<Typography
-        sx={{ fontWeight: "bold" }}
-        color="inherit"
-        align="center"
-        variant="h1"
-        >
-          UPGRADE YOUR HOME SPACE
-        </Typography>
-        ) 
-      }
+        variant={isMobileScreen ? "h2" : "h1"}
+      >
+        {translations.mainPage.mainTitle}
+      </Typography>
       <Typography
         sx={{ fontWeight: "bold", fontSize: 32 }}
         color="inherit"
@@ -51,7 +39,7 @@ export default function ProductHero() {
         variant="h2"
         marked="center"
       >
-        for summer.
+        {translations.mainPage.subTitle}
       </Typography>
       <Typography
         color="inherit"
@@ -59,7 +47,7 @@ export default function ProductHero() {
         variant="h5"
         sx={{ mb: 4, mt: { xs: 4, sm: 10 } }}
       >
-        Enjoy summer offers up to -15% off.
+        {translations.mainPage.adText}
       </Typography>
       <Button
         onClick={goToListingPage}
@@ -69,8 +57,8 @@ export default function ProductHero() {
         component="a"
         sx={{ minWidth: 200 }}
       >
-        Check out our offer
+        {translations.mainPage.buttonText}
       </Button>
-    </ProductHeroLayout>
+    </ProductMainPageLayout>
   );
 }

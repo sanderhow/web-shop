@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import { ISampleProduct } from "../../Components/SmallProductCard/SmallProductCard";
+import { favouritesCookieName } from "../../utils/constants";
 
 interface IFavouritesContext {
   items: ISampleProduct[] | undefined;
@@ -23,7 +24,7 @@ export const FavouritesContextProvider = ({ children }: PropsWithChildren) => {
   const [items, setItems] = useState<ISampleProduct[] | undefined>([]);
 
   useEffect(() => {
-    const readCookie = Cookies.get("favouritesCookie");
+    const readCookie = Cookies.get(favouritesCookieName);
     if (readCookie) {
       const arrayFavCookie = JSON.parse(readCookie);
       setItems(arrayFavCookie);

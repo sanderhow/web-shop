@@ -9,6 +9,7 @@ import ModalTextArea from "./ModalTextArea";
 import { useUser } from "../../../Contexts/Auth/UserData";
 import { useNavigate } from "react-router-dom";
 import * as P from "./parts";
+import { translations } from "../../../utils/translations";
 
 const styleModal = {
   position: "absolute" as "absolute",
@@ -53,8 +54,8 @@ const LoginModal = () => {
     <>
       <Button onClick={handleOpen}>
         {isAuth ? (
-          <Avatar 
-            src="user.jpg" 
+          <Avatar
+            src="user.jpg"
             sx={{
               width: 24,
               height: 24,
@@ -87,7 +88,9 @@ const LoginModal = () => {
           >
             <Fade in={open}>
               <Box sx={isTabletOrMobileScreen ? styleMobileModal : styleModal}>
-                <Button onClick={handleNavigate}>Wyloguj</Button>
+                <Button onClick={handleNavigate}>
+                  {translations.loginModal.logOutText}
+                </Button>
               </Box>
             </Fade>
           </Modal>

@@ -25,21 +25,22 @@ interface IHeaderNavProps {
 }
 
 const Header: React.FC<IHeaderNavProps> = ({ handleClickMenu }) => {
-  const isMobileScreen = useMediaQuery("(max-width:800px)");
+  const isMobileScreen = useMediaQuery("(max-width:600px)");
   const isTabletScreen = useMediaQuery("(max-width:1000px)");
 
   return (
     <StyledToolbar
-    sx={{
-      justifyContent: "space-between",
-    }}
+      sx={{
+        justifyContent:
+          isMobileScreen || isTabletScreen ? "space-between" : "flex-end",
+      }}
     >
       {isMobileScreen || isTabletScreen ? (
         <IconButton onClick={handleClickMenu} sx={{ color: "#9e9e9e" }}>
           <DragHandleIcon />
         </IconButton>
       ) : undefined}
-        <Stack
+      <Stack
         direction="row"
         alignItems="center"
         sx={{
@@ -48,11 +49,11 @@ const Header: React.FC<IHeaderNavProps> = ({ handleClickMenu }) => {
           gap: 2,
           width: 170,
         }}
-        >
-             <FavouriteHeader />
-             <BasketHeader />
-             <UserHeader />
-           </Stack>
+      >
+        <FavouriteHeader />
+        <BasketHeader />
+        <UserHeader />
+      </Stack>
     </StyledToolbar>
   );
 };

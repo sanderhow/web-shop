@@ -4,7 +4,7 @@ import { SxProps } from "@mui/system";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
-const ProductHeroLayoutRoot = styled("section")(({ theme }) => ({
+const ProductMainPageLayoutRoot = styled("section")(({ theme }) => ({
   color: theme.palette.common.white,
   position: "relative",
   display: "flex",
@@ -31,20 +31,20 @@ interface ProductHeroLayoutProps {
   sxBackground: SxProps<Theme>;
 }
 
-export default function ProductHeroLayout(
+export default function ProductMainPageLayout(
   props: React.HTMLAttributes<HTMLDivElement> & ProductHeroLayoutProps
 ) {
   const { sxBackground, children } = props;
 
   return (
-    <ProductHeroLayoutRoot>
+    <ProductMainPageLayoutRoot>
       <Container
         sx={{
           mt: 12,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          height: "100vh"
+          height: "100vh",
         }}
       >
         {children}
@@ -62,6 +62,6 @@ export default function ProductHeroLayout(
         />
         <Background sx={sxBackground} />
       </Container>
-    </ProductHeroLayoutRoot>
+    </ProductMainPageLayoutRoot>
   );
 }

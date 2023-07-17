@@ -40,10 +40,6 @@ const navConfig = [
     title: "Listing",
     path: "/listing",
   },
-  {
-    title: "Checkout",
-    path: "/checkout",
-  },
 ];
 
 interface INavbarProps {
@@ -105,7 +101,7 @@ const Navbar: React.FC<INavbarProps> = ({
   );
   return (
     <P.Wrapper>
-      {(isMobileScreen || isTabletScreen) ? (
+      {isMobileScreen || isTabletScreen ? (
         <Drawer
           open={isMenuClicked}
           variant="temporary"

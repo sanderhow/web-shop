@@ -19,7 +19,6 @@ const App: React.FC = () => {
   const [isMenuClicked, setIsMenuClicked] = useState(false);
   const handleClickMenu = () => {
     setIsMenuClicked(!isMenuClicked);
-    console.log(handleClickMenu);
   };
   return (
     <UserContextProvider>

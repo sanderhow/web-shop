@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { MenuItem } from "@mui/material";
+import { translations } from "../../utils/translations";
 
 const country = [
   {
@@ -37,7 +38,7 @@ const AddressForm = () => {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Shipping address
+        {translations.addressForm.shippingAddress}
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
@@ -146,7 +147,7 @@ const AddressForm = () => {
             control={
               <Checkbox color="secondary" name="saveAddress" value="yes" />
             }
-            label="Use this address for payment details"
+            label={translations.addressForm.label}
           />
         </Grid>
       </Grid>

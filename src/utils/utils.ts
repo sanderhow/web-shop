@@ -17,7 +17,6 @@ export function stringToColor(string: string) {
 }
 
 export function stringAvatar(name: string) {
-  console.log(`name to: ${name}`);
   return {
     sx: {
       bgcolor: stringToColor(name),
@@ -28,5 +27,5 @@ export function stringAvatar(name: string) {
   };
 }
 
-export const mobileBreakpoint = '600px';
-export const tabletBreakpoint = '1000px';
+export const mobileBreakpoint = "600px";
+export const tabletBreakpoint = "1000px";

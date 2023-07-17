@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import { ISampleProduct } from "../../Components/SmallProductCard/SmallProductCard";
+import { basketCookieName } from "../../utils/constants";
 
 export type IBasketTable = ISampleProduct & { quantity: number };
 
@@ -25,7 +26,7 @@ export const BasketContextProvider = ({ children }: PropsWithChildren) => {
   );
 
   useEffect(() => {
-    const readCookie = Cookies.get("basketCookie");
+    const readCookie = Cookies.get(basketCookieName);
     if (readCookie) {
       const arrayBasketCookie = JSON.parse(readCookie);
       setBasketItems(arrayBasketCookie);

@@ -16,6 +16,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Dropdown1 from "../../Components/Dropdown/Dropdown1";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { useNavigate } from "react-router-dom";
+import { translations } from "../../utils/translations";
 
 const Basket = () => {
   const { basketItems, setBasketItems } = useBasket();
@@ -41,16 +42,16 @@ const Basket = () => {
   };
 
   const titleFormatter = (title: string) => {
-    if (title.length > 50 ) {
-      return title.slice(0, 51) + '...';
+    if (title.length > 50) {
+      return title.slice(0, 51) + "...";
     } else {
       return title;
     }
-  }
+  };
 
   return (
     <P.BasketWrapper>
-      <TableContainer sx={{ width: '90%', margin: 'auto' }}component={Paper}>
+      <TableContainer sx={{ overflowX: "unset" }} component={Paper}>
         <Table size="medium" aria-label="a dense table">
           <TableHead>
             <TableRow>
@@ -74,7 +75,7 @@ const Basket = () => {
                       height="40"
                     />
                   </TableCell>
-                
+
                   <TableCell align="right">{titleFormatter(x.title)}</TableCell>
                   <TableCell align="right">{x.price}</TableCell>
                   <TableCell align="right">
@@ -88,19 +89,18 @@ const Basket = () => {
                   <TableCell align="right">{x.price * x.quantity}</TableCell>
                 </TableRow>
               ))}
-
           </TableBody>
-            <TableRow>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell
-                sx={{ fontWeight: "bold", fontSize: "h6.fontSize" }}
-                align="right"
-              >{`${totalBasketSum()}$`}</TableCell>
-            </TableRow>
+          <TableRow>
+            <TableCell align="right"></TableCell>
+            <TableCell align="right"></TableCell>
+            <TableCell align="right"></TableCell>
+            <TableCell align="right"></TableCell>
+            <TableCell align="right"></TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold", fontSize: "h6.fontSize" }}
+              align="right"
+            >{`${totalBasketSum()}$`}</TableCell>
+          </TableRow>
         </Table>
       </TableContainer>
       <P.ButtonWrapper>
@@ -109,7 +109,7 @@ const Basket = () => {
           variant="contained"
           startIcon={<ShoppingBasketIcon />}
         >
-          Proceed to checkout
+          {translations.basket.desktopButtonText}
         </Button>
       </P.ButtonWrapper>
     </P.BasketWrapper>

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -11,6 +11,10 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./Payment";
+import { translations } from "../../utils/translations";
+import { useBasket } from "../../Contexts/Basket/BasketContext";
+import Cookies from "js-cookie";
+import { basketCookieName } from "../../utils/constants";
 
 const steps = ["Shipping address", "Payment details"];
 
@@ -29,6 +33,19 @@ const defaultTheme = createTheme();
 
 const CheckoutMui = () => {
   const [activeStep, setActiveStep] = React.useState(0);
+  const { setBasketItems } = useBasket();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const resetBasket = () => {
+    setBasketItems([]);
+    Cookies.remove(basketCookieName, { path: "" });
+  };
+
+  useEffect(() => {
+    if (activeStep === steps.length) {
+      resetBasket();
+    }
+  }, [activeStep, resetBasket]);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -47,7 +64,7 @@ const CheckoutMui = () => {
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
         >
           <Typography component="h1" variant="h4" align="center">
-            Checkout
+            {translations.checkoutMui.mainTitle}
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
@@ -59,12 +76,10 @@ const CheckoutMui = () => {
           {activeStep === steps.length ? (
             <React.Fragment>
               <Typography variant="h5" gutterBottom>
-                Thank you for your order.
+                {translations.checkoutMui.finalTile}
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
+                {translations.checkoutMui.OrderText}
               </Typography>
             </React.Fragment>
           ) : (
@@ -73,7 +88,7 @@ const CheckoutMui = () => {
               <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                    Back
+                    {translations.checkoutMui.buttonBackText}
                   </Button>
                 )}
                 <Button
@@ -81,7 +96,9 @@ const CheckoutMui = () => {
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
-                  {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                  {activeStep === steps.length - 1
+                    ? translations.checkoutMui.buttonOrderText
+                    : translations.checkoutMui.buttonNextText}
                 </Button>
               </Box>
             </React.Fragment>

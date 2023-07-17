@@ -13,6 +13,7 @@ import { IUserData } from "../../SmallProductCard/SmallProductCard";
 import axios from "axios";
 import { useUser } from "../../../Contexts/Auth/UserData";
 import React from "react";
+import { translations } from "../../../utils/translations";
 
 interface IModalTextAreaProps {
   handleClose: () => void;
@@ -55,11 +56,12 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
           marginBottom: 2,
         }}
       >
-        <Grid 
+        <Grid
           sx={{
-            minWidth: isMobileScreen ? '250px' : '400px'
+            minWidth: isMobileScreen ? "250px" : "400px",
           }}
-          container>
+          container
+        >
           <CssBaseline />
           {isTabletOrMobileScreen ? undefined : (
             <Grid
@@ -100,7 +102,7 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
               }}
             >
               <Typography component="h1" variant="h5">
-                Sign in
+                {translations.modalTextArea.signInText}
               </Typography>
               <Box
                 component="form"
@@ -130,25 +132,26 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
                 />
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
+                  label={translations.modalTextArea.rememberText}
                 />
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
+                  color="secondary"
                   sx={{ mt: 3, mb: 2, backgroundColor: "#b8b5b5" }}
                 >
-                  Sign In
+                  {translations.modalTextArea.signInText}
                 </Button>
                 <Grid container>
                   <Grid item xs>
                     <Link href="#" variant="body2">
-                      Forgot password?
+                      {translations.modalTextArea.questionText1}
                     </Link>
                   </Grid>
                   <Grid item>
                     <Link href="#" variant="body2">
-                      {"Don't have an account? Sign Up"}
+                      {translations.modalTextArea.questionText2}
                     </Link>
                   </Grid>
                 </Grid>

@@ -11,6 +11,7 @@ import { pink } from "@mui/material/colors";
 import { useFavourites } from "../../Contexts/Favourites/FavouritesContext";
 import { IBasketTable, useBasket } from "../../Contexts/Basket/BasketContext";
 import Cookies from "js-cookie";
+import { basketCookieName, favouritesCookieName } from "../../utils/constants";
 
 const StyledProductImg = styled("img")({
   top: 0,
@@ -82,7 +83,9 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
     if (items && product) {
       setItems([...items, product]);
       const jsonFavouritesCookie = JSON.stringify([...items, product]);
-      Cookies.set("favouritesCookie", jsonFavouritesCookie, { expires: 2000 });
+      Cookies.set(favouritesCookieName, jsonFavouritesCookie, {
+        expires: 2000,
+      });
     }
 
     event.preventDefault();
@@ -90,12 +93,12 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
   };
 
   const favouriteRemoved = (event: React.SyntheticEvent) => {
-    setIsClickedFav(!isClickedFav);
+    setIsClickedFav(false);
 
     const newFavouritesItems = items?.filter((item) => item.id !== id);
     setItems(newFavouritesItems);
     const jsonFavouritesCookie = JSON.stringify(newFavouritesItems);
-    Cookies.set("favouritesCookie", jsonFavouritesCookie, { expires: 2000 });
+    Cookies.set(favouritesCookieName, jsonFavouritesCookie, { expires: 2000 });
 
     event.preventDefault();
     event.stopPropagation();
@@ -107,7 +110,6 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
   //Basket management//
   //---------------------------------------------------------------------------------------------------------------------------------------------------//
   const clickedBag = (event: React.SyntheticEvent) => {
-    console.log("clickedBag");
     setIsClickedBag(true);
 
     if (basketItems && product) {
@@ -118,12 +120,12 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
         }
         setBasketItems([...basketItems]);
         const jsonBasketCookie = JSON.stringify([...basketItems]);
-        Cookies.set("basketCookie", jsonBasketCookie, { expires: 2000 });
+        Cookies.set(basketCookieName, jsonBasketCookie, { expires: 2000 });
       } else {
         const newTableItem: IBasketTable = { ...product, quantity: 1 };
         setBasketItems([...basketItems, newTableItem]);
         const jsonBasketCookie = JSON.stringify([...basketItems, newTableItem]);
-        Cookies.set("basketCookie", jsonBasketCookie, { expires: 2000 });
+        Cookies.set(basketCookieName, jsonBasketCookie, { expires: 2000 });
       }
     }
 
