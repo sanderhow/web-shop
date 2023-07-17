@@ -1,35 +1,49 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../Components/Button/Button";
-import ProductHeroLayout from "../../../Components/ProductHeroLayout/ProductHeroLayout";
+import ProductHeroLayout from "./ProductHeroLayout";
 import Typography from "../../../Components/Typography/Typography";
+import { useMediaQuery } from "@mui/material";
 
 const backgroundImage =
   "https://images.squarespace-cdn.com/content/v1/5a9316f3ec4eb7af0927c395/1623753550865-V46BDME5QXAROCT94RLP/Get+in+touch+to+book+a+shoot";
 
 export default function ProductHero() {
+  const isMobileScreen = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
 
   const goToListingPage = () => {
     navigate(`/listing`);
   };
 
+
   return (
     <ProductHeroLayout
       sxBackground={{
         backgroundImage: `url(${backgroundImage})`,
-        backgroundColor: "#7fc7d9", // Average color of the background image.
         backgroundPosition: "center",
       }}
     >
-      <Typography
+      {isMobileScreen ? (
+        <Typography
         sx={{ fontWeight: "bold" }}
         color="inherit"
         align="center"
         variant="h2"
-      >
-        UPGRADE YOUR HOME SPACE
-      </Typography>
+        >
+          UPGRADE YOUR HOME SPACE
+        </Typography>
+        ) :
+        (<Typography
+        sx={{ fontWeight: "bold" }}
+        color="inherit"
+        align="center"
+        variant="h1"
+        >
+          UPGRADE YOUR HOME SPACE
+        </Typography>
+        ) 
+      }
       <Typography
         sx={{ fontWeight: "bold", fontSize: 32 }}
         color="inherit"

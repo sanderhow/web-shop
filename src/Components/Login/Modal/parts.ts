@@ -5,7 +5,7 @@ export const UserDataWrapper = styled.div`
 `;
 
 export const ModalWrapper = styled.div`
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     width: 200px;
   }
 `;

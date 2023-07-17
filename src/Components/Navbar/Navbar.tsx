@@ -56,7 +56,8 @@ const Navbar: React.FC<INavbarProps> = ({
   setIsMenuClicked,
 }) => {
   const { userItems, isAuth } = useUser();
-  const isMobileScreen = useMediaQuery("(max-width:800px)");
+  const isMobileScreen = useMediaQuery("(max-width:600px)");
+  const isTabletScreen = useMediaQuery("(max-width:1000px)");
   const renderContent = (
     <div>
       <Box sx={{ px: 2.5, py: 3, display: "inline-flex" }} />
@@ -104,7 +105,7 @@ const Navbar: React.FC<INavbarProps> = ({
   );
   return (
     <P.Wrapper>
-      {isMobileScreen ? (
+      {(isMobileScreen || isTabletScreen) ? (
         <Drawer
           open={isMenuClicked}
           variant="temporary"

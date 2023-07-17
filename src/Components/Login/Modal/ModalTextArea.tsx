@@ -20,7 +20,8 @@ interface IModalTextAreaProps {
 
 const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
   const { setUserItems, setIsAuth } = useUser();
-  const isMobileScreen = useMediaQuery("(max-width:1200px)");
+  const isMobileScreen = useMediaQuery("(max-width:600px)");
+  const isTabletOrMobileScreen = useMediaQuery("(max-width:1000px)");
 
   const getUser = async () => {
     const { data } = await axios.get<IUserData>(
@@ -54,9 +55,13 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
           marginBottom: 2,
         }}
       >
-        <Grid container>
+        <Grid 
+          sx={{
+            minWidth: isMobileScreen ? '250px' : '400px'
+          }}
+          container>
           <CssBaseline />
-          {isMobileScreen ? undefined : (
+          {isTabletOrMobileScreen ? undefined : (
             <Grid
               item
               xs={false}
@@ -75,6 +80,7 @@ const ModalTextArea: React.FC<IModalTextAreaProps> = ({ handleClose }) => {
               }}
             />
           )}
+
           <Grid
             item
             xs={12}

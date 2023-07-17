@@ -40,10 +40,18 @@ const Basket = () => {
     navigate(`/checkout`);
   };
 
+  const titleFormatter = (title: string) => {
+    if (title.length > 50 ) {
+      return title.slice(0, 51) + '...';
+    } else {
+      return title;
+    }
+  }
+
   return (
     <P.BasketWrapper>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 1000 }} size="medium" aria-label="a dense table">
+      <TableContainer sx={{ width: '90%', margin: 'auto' }}component={Paper}>
+        <Table size="medium" aria-label="a dense table">
           <TableHead>
             <TableRow>
               <TableCell>Image</TableCell>
@@ -66,7 +74,8 @@ const Basket = () => {
                       height="40"
                     />
                   </TableCell>
-                  <TableCell align="right">{x.title}</TableCell>
+                
+                  <TableCell align="right">{titleFormatter(x.title)}</TableCell>
                   <TableCell align="right">{x.price}</TableCell>
                   <TableCell align="right">
                     <Dropdown1 quantity={x.quantity} id={x.id} />
@@ -80,6 +89,7 @@ const Basket = () => {
                 </TableRow>
               ))}
 
+          </TableBody>
             <TableRow>
               <TableCell align="right"></TableCell>
               <TableCell align="right"></TableCell>
@@ -91,7 +101,6 @@ const Basket = () => {
                 align="right"
               >{`${totalBasketSum()}$`}</TableCell>
             </TableRow>
-          </TableBody>
         </Table>
       </TableContainer>
       <P.ButtonWrapper>

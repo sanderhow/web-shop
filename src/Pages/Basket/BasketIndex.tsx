@@ -5,11 +5,11 @@ import { useMediaQuery } from "@mui/material";
 import * as P from "./parts";
 
 const BasketIndex = () => {
-  const isMobileScreen = useMediaQuery("(max-width:800px)");
+  const isTabletOrMobileScreen = useMediaQuery("(max-width:1000px)");
 
   return (
     <P.BasketWrapper>
-      {isMobileScreen ? <BasketMobile /> : <Basket />}
+      {isTabletOrMobileScreen ? <BasketMobile /> : <Basket />}
     </P.BasketWrapper>
   );
 };

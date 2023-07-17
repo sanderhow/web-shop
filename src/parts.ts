@@ -1,17 +1,16 @@
 import styled from "@emotion/styled";
+import { mobileBreakpoint, tabletBreakpoint } from "./utils/utils";
 
 export const AppWrapper1 = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
-  margin: 10px 100px;
-  padding-left: 300px;
-  @media (max-width: 800px) {
-    margin: 10px 30px;
-    padding-left: 10px;
-  }
+  margin: 10px 0px 0px 292px;
   z-index: 1;
+  @media screen and (max-width: ${tabletBreakpoint}) {
+    margin: 0;
+  }
 `;
 
 export const AppWrapper2 = styled.div`

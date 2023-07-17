@@ -1,6 +1,5 @@
 import { styled } from "@mui/material/styles";
 import { Box, Stack, Toolbar, IconButton } from "@mui/material";
-import Searchbar from "../Searchbar/Searchbar";
 import DragHandleIcon from "@mui/icons-material/DragHandle";
 import BasketHeader from "../BasketHeader/BasketHeader";
 import FavouriteHeader from "../FavouriteHeader/FavouriteHeader";
@@ -27,30 +26,33 @@ interface IHeaderNavProps {
 
 const Header: React.FC<IHeaderNavProps> = ({ handleClickMenu }) => {
   const isMobileScreen = useMediaQuery("(max-width:800px)");
+  const isTabletScreen = useMediaQuery("(max-width:1000px)");
 
   return (
-    <StyledToolbar>
-      {isMobileScreen ? (
+    <StyledToolbar
+    sx={{
+      justifyContent: "space-between",
+    }}
+    >
+      {isMobileScreen || isTabletScreen ? (
         <IconButton onClick={handleClickMenu} sx={{ color: "#9e9e9e" }}>
           <DragHandleIcon />
         </IconButton>
       ) : undefined}
-      <Searchbar />
-      <Box sx={{ flexGrow: 1 }} />
-
-      <Stack
+        <Stack
         direction="row"
         alignItems="center"
         sx={{
           xs: 0.5,
           sm: 1,
           gap: 2,
+          width: 170,
         }}
-      >
-        <FavouriteHeader />
-        <BasketHeader />
-        <UserHeader />
-      </Stack>
+        >
+             <FavouriteHeader />
+             <BasketHeader />
+             <UserHeader />
+           </Stack>
     </StyledToolbar>
   );
 };

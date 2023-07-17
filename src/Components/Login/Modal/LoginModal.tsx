@@ -40,7 +40,7 @@ const LoginModal = () => {
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
   const { isAuth, setIsAuth, setUserItems } = useUser();
-  const isMobileScreen = useMediaQuery("(max-width:1200px)");
+  const isTabletOrMobileScreen = useMediaQuery("(max-width:1000px)");
 
   const handleNavigate = () => {
     navigate(`/`);
@@ -53,7 +53,13 @@ const LoginModal = () => {
     <>
       <Button onClick={handleOpen}>
         {isAuth ? (
-          <Avatar src="user.jpg" />
+          <Avatar 
+            src="user.jpg" 
+            sx={{
+              width: 24,
+              height: 24,
+            }}
+          />
         ) : (
           <Avatar
             src="/broken-image.jpg"
@@ -80,7 +86,7 @@ const LoginModal = () => {
             }}
           >
             <Fade in={open}>
-              <Box sx={isMobileScreen ? styleMobileModal : styleModal}>
+              <Box sx={isTabletOrMobileScreen ? styleMobileModal : styleModal}>
                 <Button onClick={handleNavigate}>Wyloguj</Button>
               </Box>
             </Fade>
@@ -99,7 +105,7 @@ const LoginModal = () => {
           }}
         >
           <Fade in={open}>
-            <Box sx={isMobileScreen ? styleMobileModal : styleModal}>
+            <Box sx={isTabletOrMobileScreen ? styleMobileModal : styleModal}>
               <ModalTextArea handleClose={handleClose} />
             </Box>
           </Fade>

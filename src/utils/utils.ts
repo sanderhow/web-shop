@@ -27,3 +27,6 @@ export function stringAvatar(name: string) {
       .toUpperCase()}`,
   };
 }
+
+export const mobileBreakpoint = '600px';
+export const tabletBreakpoint = '1000px';

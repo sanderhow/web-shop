@@ -4,5 +4,5 @@ export const FooterWrapper = styled.div`
   margin-top: auto;
   display: flex;
   justify-content: center;
-  padding-bottom: 10px;
+  padding: 10px 0;
 `;

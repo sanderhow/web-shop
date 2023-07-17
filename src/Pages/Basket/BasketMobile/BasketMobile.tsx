@@ -10,11 +10,12 @@ import * as P from "../parts";
 import { useNavigate } from "react-router-dom";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { useCallback, useEffect } from "react";
-import { TableCell, TableRow } from "@mui/material";
+import { TableCell, TableRow, useMediaQuery } from "@mui/material";
 
 const BasketMobile = () => {
   const { basketItems, setBasketItems } = useBasket();
   const navigate = useNavigate();
+  const isMobileScreen = useMediaQuery("(max-width:600px)");
 
   const removeFromBasket = (id: number) => {
     const newBasketItems = basketItems?.filter((item) => item.id !== id);
@@ -36,15 +37,18 @@ const BasketMobile = () => {
   };
 
   return (
+  <>
     <Box
       sx={{
         width: "100%",
-        maxWidth: 360,
-        bgcolor: "background.paper",
+        bgColor: "background.paper",
         display: "flex",
-        flexDirection: "column",
+        flexDirection: isMobileScreen ? "column" : "row",
+        flexWrap: "wrap",
+        justifyContent: 'center',
+        gap: '10px',
       }}
-    >
+      >
       {basketItems &&
         basketItems.map((x, id) => (
           <P.BasketWrapperMobile>
@@ -56,7 +60,7 @@ const BasketMobile = () => {
                     gutterBottom
                     variant="h4"
                     component="div"
-                  >
+                    >
                     {x.title}
                   </Typography>
                 </Grid>
@@ -70,14 +74,14 @@ const BasketMobile = () => {
                 sx={{ display: "flex", justifyContent: "center" }}
                 color="text.secondary"
                 variant="body2"
-              >
+                >
                 <P.ProductPhoto
                   src={x.image}
                   loading="lazy"
                   alt=""
                   width="70"
                   height="70"
-                />
+                  />
               </Typography>
             </Box>
 
@@ -92,6 +96,7 @@ const BasketMobile = () => {
             <Divider variant="middle" />
           </P.BasketWrapperMobile>
         ))}
+    </Box>
       <TableRow sx={{ display: "flex", flexDirection: "row-reverse" }}>
         <TableCell sx={{ fontWeight: "bold", fontSize: "h6.fontSize" }}>
           {`${totalBasketSum()}$`}
@@ -102,13 +107,13 @@ const BasketMobile = () => {
               onClick={goToCheckout}
               variant="contained"
               startIcon={<ShoppingBasketIcon />}
-            >
+              >
               Proceed
             </Button>
           </P.ButtonWrapper>
         </TableCell>
       </TableRow>
-    </Box>
+  </>
   );
 };
 

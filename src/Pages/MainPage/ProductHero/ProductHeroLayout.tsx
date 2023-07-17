@@ -10,7 +10,7 @@ const ProductHeroLayoutRoot = styled("section")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   [theme.breakpoints.up("sm")]: {
-    height: "80vh",
+    height: "100vh",
     minHeight: 500,
     maxHeight: 1300,
   },
@@ -40,11 +40,11 @@ export default function ProductHeroLayout(
     <ProductHeroLayoutRoot>
       <Container
         sx={{
-          mt: 3,
-          mb: 14,
+          mt: 12,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          height: "100vh"
         }}
       >
         {children}
