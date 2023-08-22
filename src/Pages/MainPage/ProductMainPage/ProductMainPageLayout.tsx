@@ -9,6 +9,7 @@ const ProductMainPageLayoutRoot = styled("section")(({ theme }) => ({
   position: "relative",
   display: "flex",
   alignItems: "center",
+  marginRight: "10px",
   [theme.breakpoints.up("sm")]: {
     height: "100vh",
     minHeight: 500,

@@ -12,6 +12,8 @@ import Rating from "@mui/material/Rating";
 import { IBasketTable, useBasket } from "../../Contexts/Basket/BasketContext";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { getSimpleProductUrl } from "../../utils/paths";
+import Cookies from "js-cookie";
+import { basketCookieName } from "../../utils/constants";
 
 const ProductCard: React.FC = () => {
   const [product, setProduct] = useState<ISampleProduct | null>(null);
@@ -36,16 +38,19 @@ const ProductCard: React.FC = () => {
     setIsAddToCart(!isAddToCart);
 
     if (basketItems && product) {
-      if (basketItems.some((x) => x.id === product.id)) {
-        const elementDuplicated = basketItems.find((x) => x.id === product.id);
+      if (basketItems.some((x) => x.id === Number(id))) {
+        const elementDuplicated = basketItems.find((x) => x.id === Number(id));
         if (elementDuplicated) {
           elementDuplicated.quantity++;
-          setBasketItems([...basketItems]);
         }
+        setBasketItems([...basketItems]);
+        const jsonBasketCookie = JSON.stringify([...basketItems]);
+        Cookies.set(basketCookieName, jsonBasketCookie, { expires: 2000 });
       } else {
         const newTableItem: IBasketTable = { ...product, quantity: 1 };
-        basketItems.push(newTableItem);
         setBasketItems([...basketItems, newTableItem]);
+        const jsonBasketCookie = JSON.stringify([...basketItems, newTableItem]);
+        Cookies.set(basketCookieName, jsonBasketCookie, { expires: 2000 });
       }
     }
 

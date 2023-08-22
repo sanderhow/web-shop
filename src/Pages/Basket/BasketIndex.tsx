@@ -8,7 +8,7 @@ const BasketIndex = () => {
   const isTabletOrMobileScreen = useMediaQuery("(max-width:1000px)");
 
   return (
-    <P.BasketWrapper>
+    <P.BasketWrapper hasProducts={true}>
       {isTabletOrMobileScreen ? <BasketMobile /> : <Basket />}
     </P.BasketWrapper>
   );

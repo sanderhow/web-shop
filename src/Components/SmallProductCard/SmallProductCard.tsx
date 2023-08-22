@@ -141,9 +141,22 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
     navigate(`/product/${id}`);
   };
   // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  const cutLongTitles = (title: string) => {
+    if (title.length >= 60) {
+      return `${title.substring(0, 50)}...`;
+    } else return title;
+  };
 
   return (
-    <Card sx={{ height: 450 }} onClick={clickedProduct}>
+    <Card
+      sx={{
+        minHeight: 400,
+        cursor: "pointer",
+        paddingTop: "20px",
+        "&:hover": { boxShadow: 5 },
+      }}
+      onClick={clickedProduct}
+    >
       <Box sx={{ position: "relative", width: 300, height: 230 }}>
         {!isFavourite && !isFavouriteOnList ? (
           isClickedFav ? (
@@ -154,12 +167,19 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
                 p: 1,
                 zIndex: 1,
                 color: pink[500],
+                cursor: "pointer",
               }}
               onClick={clickedFav}
             />
           ) : (
             <FavoriteBorderOutlinedIcon
-              sx={{ position: "absolute", right: 5, p: 1, zIndex: 1 }}
+              sx={{
+                position: "absolute",
+                right: 5,
+                p: 1,
+                zIndex: 1,
+                cursor: "pointer",
+              }}
               onClick={clickedFav}
             />
           )
@@ -171,6 +191,7 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
               p: 1,
               zIndex: 1,
               color: pink[500],
+              cursor: "pointer",
             }}
             onClick={favouriteRemoved}
           />
@@ -179,25 +200,46 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
         {!isBasket && !isBasketOnList ? (
           isClickedBag ? (
             <ShoppingBagIcon
-              sx={{ position: "absolute", right: 5, mt: 4, p: 1, zIndex: 1 }}
+              sx={{
+                position: "absolute",
+                right: 5,
+                mt: 4,
+                p: 1,
+                zIndex: 1,
+                cursor: "pointer",
+              }}
               onClick={clickedBag}
             />
           ) : (
             <ShoppingBagOutlinedIcon
-              sx={{ position: "absolute", right: 5, mt: 4, p: 1, zIndex: 1 }}
+              sx={{
+                position: "absolute",
+                right: 5,
+                mt: 4,
+                p: 1,
+                zIndex: 1,
+                cursor: "pointer",
+              }}
               onClick={clickedBag}
             />
           )
         ) : (
           <ShoppingBagIcon
-            sx={{ position: "absolute", right: 5, mt: 4, p: 1, zIndex: 1 }}
+            sx={{
+              position: "absolute",
+              right: 5,
+              mt: 4,
+              p: 1,
+              zIndex: 1,
+              cursor: "pointer",
+            }}
             onClick={clickedBag}
           />
         )}
         <StyledProductImg alt={title} src={image} />
       </Box>
 
-      <Stack spacing={2} sx={{ p: 3 }}>
+      <Stack spacing={2} sx={{ p: 3, paddingBottom: "10px" }}>
         <Link color="inherit" underline="hover">
           <Typography
             variant="subtitle2"
@@ -206,7 +248,7 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
               width: 250,
             }}
           >
-            {title}
+            {cutLongTitles(title)}
           </Typography>
         </Link>
 

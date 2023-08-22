@@ -4,9 +4,7 @@ import ProductMainPage from "./ProductMainPage/ProductMainPage";
 const MainPage: React.FC = () => {
   return (
     <div>
-      <React.Fragment>
-        <ProductMainPage />
-      </React.Fragment>
+      <ProductMainPage />
     </div>
   );
 };

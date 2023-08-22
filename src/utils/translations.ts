@@ -9,6 +9,8 @@ export const translations = {
   basket: {
     mobileButtonText: "Proceed",
     desktopButtonText: "Proceed to checkout",
+    addProducts: "Add products",
+    noItemsInBasket: "You do not have any products in cart.",
   },
 
   checkoutMui: {
@@ -40,5 +42,10 @@ export const translations = {
 
   loginModal: {
     logOutText: "Wyloguj",
+  },
+
+  favourites: {
+    addProducts: "Add to favourites",
+    noItemsInFav: "You haven't added any products yet.",
   },
 };
