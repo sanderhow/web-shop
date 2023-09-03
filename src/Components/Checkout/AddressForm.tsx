@@ -16,6 +16,17 @@ interface IAddressForm {
   handleNext: () => void;
 }
 
+interface FormData {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  address1?: string;
+  address2?: string;
+  zip?: string;
+  city?: string;
+  country?: string;
+}
+
 const AddressForm: React.FC<IAddressForm> = ({ activeStep, handleNext }) => {
   const SignupSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -46,20 +57,30 @@ const AddressForm: React.FC<IAddressForm> = ({ activeStep, handleNext }) => {
       .required("Required"),
   });
 
+  const getFinalText = (): FormData => {
+    const readCookie = Cookies.get(userDataCookieName);
+    let readCookieObj;
+    if (readCookie) {
+      readCookieObj = JSON.parse(readCookie);
+      return { ...readCookieObj };
+    } else
+      return {
+        firstName: "",
+        lastName: "",
+        address1: "",
+        address2: "",
+        email: "",
+        city: "",
+        zip: "",
+        country: "",
+      };
+  };
+
   return (
     <React.Fragment>
       <Grid sx={{ p: 1 }}>
         <Formik
-          initialValues={{
-            firstName: "",
-            lastName: "",
-            address1: "",
-            address2: "",
-            email: "",
-            city: "",
-            zip: "",
-            country: "",
-          }}
+          initialValues={getFinalText()}
           validationSchema={SignupSchema}
           onSubmit={(values) => {
             const jsonFavouritesCookie = JSON.stringify({ ...values });
@@ -114,7 +135,7 @@ const AddressForm: React.FC<IAddressForm> = ({ activeStep, handleNext }) => {
                   type="email"
                   fullWidth
                   variant="standard"
-                  value={values.email.toUpperCase()}
+                  value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={touched.email && Boolean(errors.email)}
@@ -148,7 +169,7 @@ const AddressForm: React.FC<IAddressForm> = ({ activeStep, handleNext }) => {
                   fullWidth
                   autoComplete="shipping address-line2"
                   variant="standard"
-                  value={values.address2.toUpperCase()}
+                  value={values.address2}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={touched.address2 && Boolean(errors.address2)}
@@ -182,7 +203,7 @@ const AddressForm: React.FC<IAddressForm> = ({ activeStep, handleNext }) => {
                   fullWidth
                   autoComplete="shipping address-level2"
                   variant="standard"
-                  value={values.city.toUpperCase()}
+                  value={values.city}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={touched.city && Boolean(errors.city)}
@@ -198,7 +219,7 @@ const AddressForm: React.FC<IAddressForm> = ({ activeStep, handleNext }) => {
                   defaultValue="Poland"
                   fullWidth
                   variant="standard"
-                  value={values.country.toUpperCase()}
+                  value={values.country}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={touched.country && Boolean(errors.country)}

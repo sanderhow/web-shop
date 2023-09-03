@@ -50,9 +50,9 @@ export const translations = {
   },
 
   snackBarMessages: {
-    deletedFromFav: "Usunięto z ulubionych.",
-    addToFav: "Dodano do ulubionych.",
-    deletedFromBasket: "Usunięto z koszyka.",
-    addToBasket: "Dodano do koszyka.",
+    deletedFromFav: "Removed from favourites.",
+    addToFav: "Added to favourites.",
+    deletedFromBasket: "Removed from basket.",
+    addToBasket: "Added to basket.",
   },
 };

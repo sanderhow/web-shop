@@ -162,12 +162,12 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
     <>
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={2000}
+        autoHideDuration={1000}
         sx={{ zIndex: 300, display: "block", marginRight: "35px" }}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        onClose={() => setSnackbarOpen(false)}
       >
         <MuiAlert
-          onClose={() => setSnackbarOpen(false)}
           severity="info"
           sx={{ width: "100%" }}
           elevation={6}

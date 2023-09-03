@@ -1,8 +1,6 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import { translations } from "../../utils/translations";
 import { Button } from "@mui/material";
 import { Formik, Form } from "formik";
@@ -18,10 +16,17 @@ interface IPaymentForm {
   activeStep: number;
 }
 
+interface FormData {
+  cardName?: string;
+  cardNumber?: string;
+  expDate?: string;
+  cvv?: string;
+}
+
 const PaymentForm: React.FC<IPaymentForm> = ({
   activeStep,
   handleNext,
-  handleBack
+  handleBack,
 }) => {
   const SignupSchema = Yup.object().shape({
     cardName: Yup.string()
@@ -42,16 +47,26 @@ const PaymentForm: React.FC<IPaymentForm> = ({
       .required("Required"),
   });
 
+  const getFinalText = (): FormData => {
+    const readCookie = Cookies.get(userDataCookieName);
+    let readCookieObj;
+    if (readCookie) {
+      readCookieObj = JSON.parse(readCookie);
+      return { ...readCookieObj };
+    } else
+      return {
+        cardName: "",
+        cardNumber: "",
+        expDate: "",
+        cvv: "",
+      };
+  };
+
   return (
     <React.Fragment>
       <Grid sx={{ p: 1 }}>
         <Formik
-          initialValues={{
-            cardName: "",
-            cardNumber: "",
-            expDate: "",
-            cvv: "",
-          }}
+          initialValues={getFinalText()}
           validationSchema={SignupSchema}
           onSubmit={(values) => {
             const readCookie = Cookies.get(userDataCookieName);
@@ -137,12 +152,6 @@ const PaymentForm: React.FC<IPaymentForm> = ({
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox color="secondary" name="saveCard" value="yes" />
-                  }
-                  label={translations.paymentForm.label}
-                />
                 <Button
                   type="submit"
                   variant="contained"
