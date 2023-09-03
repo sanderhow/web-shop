@@ -9,6 +9,7 @@ export const BasketWrapper = styled.div<{ hasProducts: boolean }>`
   width: 95%;
   gap: 20px;
   height: 100%;
+  justify-content: center;
 
   @media screen and (min-width: ${mobileBreakpoint}) and (max-width: ${tabletBreakpoint}) {
     width: 100%;
@@ -51,6 +52,7 @@ export const ButtonWrapper = styled.div`
     margin: 0;
     display: flex;
     float: none;
+    justify-content: center;
   }
 `;
 

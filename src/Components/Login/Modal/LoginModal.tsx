@@ -15,6 +15,7 @@ const styleModal = {
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
+  textAlign: "center",
   transform: "translate(-50%, -50%)",
   width: 850,
   bgcolor: "background.paper",
@@ -25,6 +26,7 @@ const styleModal = {
 
 const styleMobileModal = {
   position: "absolute" as "absolute",
+  textAlign: "center",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
@@ -52,7 +54,7 @@ const LoginModal = () => {
 
   return (
     <>
-      <Button onClick={handleOpen}>
+      <Button sx={{ minWidth: 0 }} onClick={handleOpen}>
         {isAuth ? (
           <Avatar
             src="user.jpg"

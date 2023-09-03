@@ -1,4 +1,4 @@
-import { Card } from "@mui/material";
+import { Card, useMediaQuery } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -21,6 +21,8 @@ const ProductCard: React.FC = () => {
   const [rating, setRating] = React.useState<number | null>(2);
   const [isAddToCart, setIsAddToCart] = useState<boolean>(false);
   const { basketItems, setBasketItems } = useBasket();
+  const isMobileScreen = useMediaQuery("(max-width:600px)");
+  const isTabletScreen = useMediaQuery("(max-width:1000px)");
 
   useEffect(() => {
     const getProduct = async () => {
@@ -62,15 +64,18 @@ const ProductCard: React.FC = () => {
     <Card
       variant="outlined"
       sx={{
-        width: 620,
+        maxWidth: 520,
         maxHeight: 1220,
         m: 4,
         p: 4,
+        mr: isMobileScreen ? "15px" : "auto",
+        ml: isMobileScreen ? "15px" : "auto",
         overflow: "visible",
         borderRadius: "32px",
         boxShadow: 3,
         display: "flex",
         flexDirection: "column",
+        justifyContent: "center",
       }}
     >
       <Typography sx={{ fontSize: 32 }}>{product?.title}</Typography>
@@ -79,9 +84,13 @@ const ProductCard: React.FC = () => {
       </Typography>
       <Typography sx={{ fontSize: 16 }}>{product?.description}</Typography>
       <AspectRatio
-        minHeight="120px"
+        minHeight="200px"
         maxHeight="400px"
-        sx={{ my: 2, width: 500, alignSelf: "center" }}
+        sx={{
+          my: 2,
+          width: isMobileScreen || isTabletScreen ? 200 : 500,
+          alignSelf: "center",
+        }}
       >
         <P.ProductPhoto src={product?.image} loading="lazy" alt="" />
       </AspectRatio>
@@ -109,7 +118,12 @@ const ProductCard: React.FC = () => {
           </Typography>
         </div>
         <Button
-          sx={{ ml: "auto", fontWeight: 600 }}
+          sx={{
+            ml: "auto",
+            fontWeight: 600,
+            width: isMobileScreen || isTabletScreen ? 100 : 200,
+            fontSize: isMobileScreen || isTabletScreen ? 12 : 15,
+          }}
           variant="outlined"
           size="sm"
           onClick={addToCart}

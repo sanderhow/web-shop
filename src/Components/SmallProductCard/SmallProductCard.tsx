@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Card, Link, Typography, Stack } from "@mui/material";
+import { Box, Card, Link, Typography, Stack, Snackbar } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
@@ -8,10 +8,12 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import { pink } from "@mui/material/colors";
+import { translations } from "../../utils/translations";
 import { useFavourites } from "../../Contexts/Favourites/FavouritesContext";
 import { IBasketTable, useBasket } from "../../Contexts/Basket/BasketContext";
 import Cookies from "js-cookie";
 import { basketCookieName, favouritesCookieName } from "../../utils/constants";
+import MuiAlert from "@mui/material/Alert";
 
 const StyledProductImg = styled("img")({
   top: 0,
@@ -74,10 +76,14 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
   const navigate = useNavigate();
   const { items, setItems } = useFavourites();
   const { basketItems, setBasketItems } = useBasket();
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState("");
 
   //Favourites management//
   //---------------------------------------------------------------------------------------------------------------------------------------------------//
   const clickedFav = (event: React.SyntheticEvent) => {
+    setSnackbarMessage(translations.snackBarMessages.addToFav);
+    setSnackbarOpen(true);
     setIsClickedFav(!isClickedFav);
 
     if (items && product) {
@@ -94,6 +100,8 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
 
   const favouriteRemoved = (event: React.SyntheticEvent) => {
     setIsClickedFav(false);
+    setSnackbarMessage(translations.snackBarMessages.deletedFromFav);
+    setSnackbarOpen(true);
 
     const newFavouritesItems = items?.filter((item) => item.id !== id);
     setItems(newFavouritesItems);
@@ -111,6 +119,8 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
   //---------------------------------------------------------------------------------------------------------------------------------------------------//
   const clickedBag = (event: React.SyntheticEvent) => {
     setIsClickedBag(true);
+    setSnackbarMessage(translations.snackBarMessages.addToBasket);
+    setSnackbarOpen(true);
 
     if (basketItems && product) {
       if (basketItems.some((x) => x.id === id)) {
@@ -137,7 +147,8 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
   const isBasketOnList = basketList?.some((x) => x === id);
   // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  const clickedProduct = () => {
+  const clickedProduct = (e: React.SyntheticEvent) => {
+    e.stopPropagation();
     navigate(`/product/${id}`);
   };
   // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -148,18 +159,59 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
   };
 
   return (
-    <Card
-      sx={{
-        minHeight: 400,
-        cursor: "pointer",
-        paddingTop: "20px",
-        "&:hover": { boxShadow: 5 },
-      }}
-      onClick={clickedProduct}
-    >
-      <Box sx={{ position: "relative", width: 300, height: 230 }}>
-        {!isFavourite && !isFavouriteOnList ? (
-          isClickedFav ? (
+    <>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={2000}
+        sx={{ zIndex: 300, display: "block", marginRight: "35px" }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <MuiAlert
+          onClose={() => setSnackbarOpen(false)}
+          severity="info"
+          sx={{ width: "100%" }}
+          elevation={6}
+          variant="filled"
+        >
+          {snackbarMessage}
+        </MuiAlert>
+      </Snackbar>
+      <Card
+        sx={{
+          minHeight: 400,
+          cursor: "pointer",
+          paddingTop: "20px",
+          "&:hover": { boxShadow: "2px 6px 21px -13px rgba(66, 68, 90, 1);" },
+        }}
+        onClick={clickedProduct}
+      >
+        <Box sx={{ position: "relative", width: 300, height: 230 }}>
+          {!isFavourite && !isFavouriteOnList ? (
+            isClickedFav ? (
+              <FavoriteOutlinedIcon
+                sx={{
+                  position: "absolute",
+                  right: 5,
+                  p: 1,
+                  zIndex: 1,
+                  color: pink[500],
+                  cursor: "pointer",
+                }}
+                onClick={clickedFav}
+              />
+            ) : (
+              <FavoriteBorderOutlinedIcon
+                sx={{
+                  position: "absolute",
+                  right: 5,
+                  p: 1,
+                  zIndex: 1,
+                  cursor: "pointer",
+                }}
+                onClick={clickedFav}
+              />
+            )
+          ) : (
             <FavoriteOutlinedIcon
               sx={{
                 position: "absolute",
@@ -169,36 +221,37 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
                 color: pink[500],
                 cursor: "pointer",
               }}
-              onClick={clickedFav}
+              onClick={favouriteRemoved}
             />
-          ) : (
-            <FavoriteBorderOutlinedIcon
-              sx={{
-                position: "absolute",
-                right: 5,
-                p: 1,
-                zIndex: 1,
-                cursor: "pointer",
-              }}
-              onClick={clickedFav}
-            />
-          )
-        ) : (
-          <FavoriteOutlinedIcon
-            sx={{
-              position: "absolute",
-              right: 5,
-              p: 1,
-              zIndex: 1,
-              color: pink[500],
-              cursor: "pointer",
-            }}
-            onClick={favouriteRemoved}
-          />
-        )}
+          )}
 
-        {!isBasket && !isBasketOnList ? (
-          isClickedBag ? (
+          {!isBasket && !isBasketOnList ? (
+            isClickedBag ? (
+              <ShoppingBagIcon
+                sx={{
+                  position: "absolute",
+                  right: 5,
+                  mt: 4,
+                  p: 1,
+                  zIndex: 1,
+                  cursor: "pointer",
+                }}
+                onClick={clickedBag}
+              />
+            ) : (
+              <ShoppingBagOutlinedIcon
+                sx={{
+                  position: "absolute",
+                  right: 5,
+                  mt: 4,
+                  p: 1,
+                  zIndex: 1,
+                  cursor: "pointer",
+                }}
+                onClick={clickedBag}
+              />
+            )
+          ) : (
             <ShoppingBagIcon
               sx={{
                 position: "absolute",
@@ -210,84 +263,60 @@ const SmallProductCard: React.FC<ISmallProductCardProps> = ({
               }}
               onClick={clickedBag}
             />
-          ) : (
-            <ShoppingBagOutlinedIcon
-              sx={{
-                position: "absolute",
-                right: 5,
-                mt: 4,
-                p: 1,
-                zIndex: 1,
-                cursor: "pointer",
-              }}
-              onClick={clickedBag}
-            />
-          )
-        ) : (
-          <ShoppingBagIcon
-            sx={{
-              position: "absolute",
-              right: 5,
-              mt: 4,
-              p: 1,
-              zIndex: 1,
-              cursor: "pointer",
-            }}
-            onClick={clickedBag}
-          />
-        )}
-        <StyledProductImg alt={title} src={image} />
-      </Box>
+          )}
+          <StyledProductImg alt={title} src={image} />
+        </Box>
 
-      <Stack spacing={2} sx={{ p: 3, paddingBottom: "10px" }}>
-        <Link color="inherit" underline="hover">
-          <Typography
-            variant="subtitle2"
-            sx={{
-              whiteSpace: "wrap",
-              width: 250,
-            }}
-          >
-            {cutLongTitles(title)}
-          </Typography>
-        </Link>
-
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Typography variant="subtitle1">
+        <Stack spacing={2} sx={{ p: 3, paddingBottom: "10px" }}>
+          <Link color="inherit" underline="hover">
             <Typography
-              component="span"
-              variant="body1"
+              variant="subtitle2"
               sx={{
-                color: "text.disabled",
-                textDecoration: "line-through",
+                whiteSpace: "wrap",
+                width: 250,
               }}
             >
-              {Math.round(price + 10)}
+              {cutLongTitles(title)}
             </Typography>
-            &nbsp;
-            {`${price}$`}
-          </Typography>
+          </Link>
+
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Typography variant="subtitle1">
+              <Typography
+                component="span"
+                variant="body1"
+                sx={{
+                  color: "text.disabled",
+                  textDecoration: "line-through",
+                }}
+              >
+                {Math.round(price + 10)}
+              </Typography>
+              &nbsp;
+              {`${price}$`}
+            </Typography>
+          </Stack>
+          <Box
+            sx={{
+              "& > legend": { mt: 0.5, fontSize: "1rem" },
+              mt: 0.5,
+            }}
+          >
+            <Rating
+              name="size-small"
+              defaultValue={2}
+              size="small"
+              value={rating.rate}
+              readOnly
+            />
+          </Box>
         </Stack>
-        <Box
-          sx={{
-            "& > legend": { mt: 0.5, fontSize: "1rem" },
-            mt: 0.5,
-          }}
-        >
-          <Rating
-            name="size-small"
-            defaultValue={2}
-            size="small"
-            value={rating.rate}
-            readOnly
-          />
-        </Box>
-      </Stack>
-    </Card>
+      </Card>
+    </>
   );
 };
 

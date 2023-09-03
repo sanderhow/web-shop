@@ -103,7 +103,8 @@ const BasketMobile = () => {
           <TableRow
             sx={{
               display: "flex",
-              flexDirection: isMobileScreen ? "column" : "row-reverse",
+              flexDirection: isMobileScreen ? "inherit" : "row-reverse",
+              justifyContent: "center",
             }}
           >
             <TableCell sx={{ fontWeight: "bold", fontSize: "h6.fontSize" }}>

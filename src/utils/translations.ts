@@ -41,11 +41,18 @@ export const translations = {
   },
 
   loginModal: {
-    logOutText: "Wyloguj",
+    logOutText: "Log out",
   },
 
   favourites: {
     addProducts: "Add to favourites",
     noItemsInFav: "You haven't added any products yet.",
+  },
+
+  snackBarMessages: {
+    deletedFromFav: "Usunięto z ulubionych.",
+    addToFav: "Dodano do ulubionych.",
+    deletedFromBasket: "Usunięto z koszyka.",
+    addToBasket: "Dodano do koszyka.",
   },
 };

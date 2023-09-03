@@ -8,8 +8,9 @@ export const FavouritesWrapper = styled.div<{ hasProducts: boolean }>`
   align-items: center;
   flex-wrap: wrap;
   width: fit-content;
-  margin: auto;
+  height: 100%;
   gap: 20px;
+  margin: auto;
 
   @media screen and (min-width: ${mobileBreakpoint}) and (max-width: ${tabletBreakpoint}) {
     width: 100%;
@@ -17,7 +18,7 @@ export const FavouritesWrapper = styled.div<{ hasProducts: boolean }>`
   }
 
   ${({ hasProducts }) =>
-    !hasProducts &&
+    hasProducts &&
     css`
       margin: auto;
     `}
